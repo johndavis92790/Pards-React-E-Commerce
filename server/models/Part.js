@@ -1,9 +1,8 @@
 const { Schema, model } = require("mongoose");
 
-const userSchema = new Schema({
-  username: {
+const partSchema = new Schema({
+  partNumber: {
     type: String,
-    unique: true,
     trim: true,
     allowNull: false,
   },
@@ -12,8 +11,12 @@ const userSchema = new Schema({
     trim: true,
     allowNull: false,
   },
+  price: {
+    type: Integer,
+    allowNull: true
+  }
 });
 
-const User = model("user", userSchema);
+const Part = model("part", partSchema);
 
-module.exports = User;
+module.exports = Part;
