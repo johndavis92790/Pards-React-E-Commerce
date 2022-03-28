@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import logo from "./assets/Img/logo_main.png";
 import "./App.css";
 import API from "./utils/API";
 
