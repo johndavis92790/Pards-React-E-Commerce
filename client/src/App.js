@@ -1,6 +1,13 @@
-import logo from "./assets/Img/logo_main.png";
 import "./App.css";
 import API from "./utils/API";
+
+//Pages
+import About from "./components/About"
+import Contact from "./components/Contact"
+import Footer from "./components/Footer"
+import Header from "./components/Header"
+import Home from "./components/Home"
+import Product from "./components/Product"
 
 function App() {
   const apifun = async () => {
@@ -12,23 +19,17 @@ function App() {
     }
   };
 
+  const [navSelection, setNavSelection] = useState('home');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={apifun}></button>
-      </header>
+    <div>
+      <Header setNavSelection={setNavSelection}></Header>
+      <main>
+        {navSelection === "home" ? <Home></Home> : <></>}
+        {navSelection === "product" ? <Product></Product> : <></>}
+        {navSelection === "about" ? <About></About> : <></>}
+        {navSelection === "contact" ? <Contact></Contact> : <></>}
+      </main>
+      <Footer></Footer>
     </div>
   );
 }
