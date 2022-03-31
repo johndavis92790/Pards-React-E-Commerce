@@ -29,6 +29,7 @@ function App() {
         </a>
         <button onClick={apifun}></button>
       </header>
+      <footer></footer>
     </div>
   );
 }
