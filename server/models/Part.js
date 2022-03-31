@@ -12,7 +12,7 @@ const partSchema = new Schema({
     allowNull: false,
   },
   price: {
-    type: Integer,
+    type: Number,
     allowNull: true
   }
 });
