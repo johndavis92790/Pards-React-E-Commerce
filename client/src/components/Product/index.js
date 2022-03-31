@@ -1,9 +1,13 @@
 import React from 'react'
 
-const index = () => {
+function Products() {
   return (
-    <div>index</div>
+    <section className="productPage">
+    
+      <div className="searchParts">
+      
+      </div>
+    
+    </section>
   )
 }
-
-export default index
