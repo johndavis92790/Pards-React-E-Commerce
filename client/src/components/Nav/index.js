@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import React from 'react';
 import logo from '../../assets/Img/logo_main.png';
 
@@ -14,7 +14,7 @@ function Navigation(props) {
             className="navTextName mx-3"
             onClick={() => setNavSelection("home")}
           >
-            <img src={logo} alt="Logo" height={100} />
+            <Image src={logo} alt="Logo" height={100} />
           </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
