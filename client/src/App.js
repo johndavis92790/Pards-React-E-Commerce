@@ -11,14 +11,14 @@ import Home from "./components/Home"
 import Product from "./components/Product"
 
 function App() {
-  const apifun = async () => {
-    try {
-      const response = await API.getUsers();
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const apifun = async () => {
+  //   try {
+  //     const response = await API.getUsers();
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const [navSelection, setNavSelection] = useState('home');
   return (
