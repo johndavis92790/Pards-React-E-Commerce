@@ -6,10 +6,16 @@ import {
   ListGroupItem,
   Container,
   Row,
+  Pagination
 } from "react-bootstrap";
 
 const Product = () => {
   const [parts, setparts] = useState([]);
+  const pages = parts.length() % 25;
+  for(let number = 1; number < pages; number++){
+    
+
+  }
 
   useEffect(() => {
     async function fetchData() {
