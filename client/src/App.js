@@ -30,7 +30,7 @@ function App() {
         {navSelection === "about" ? <About></About> : <></>}
         {navSelection === "contact" ? <Contact></Contact> : <></>} */}
       </main>
-      <Footer></Footer>
+      <Footer setNavSelection={setNavSelection}></Footer>
     </div>
   );
 }
