@@ -53,6 +53,14 @@ function Navigation(props) {
                 Contact Us!
               </span>
             </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("login")}
+              >
+                Login
+              </span>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
