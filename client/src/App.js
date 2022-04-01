@@ -1,5 +1,5 @@
 import "./App.css";
-import API from "./utils/API";
+// import API from "./utils/API";
 import React, { useState } from 'react';
 
 //Pages
@@ -24,7 +24,9 @@ function App() {
   const [navSelection, setNavSelection] = useState('home');
   return (
     <div>
-      <Header setNavSelection={setNavSelection}></Header>
+      <div className="App-header">
+      <Header setNavSelection={setNavSelection} ></Header>
+      </div>
       <main>
         {navSelection === "home" ? <Home></Home> : <></>}
         {/* {navSelection === "product" ? <Product></Product> : <></>} */}

@@ -1,6 +1,7 @@
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import React from 'react';
 import logo from '../../assets/Img/logo_main.png';
+import '../../App.css'
 
 function Navigation(props) {
   const { setNavSelection } = props;
@@ -14,7 +15,7 @@ function Navigation(props) {
             className="navTextName mx-3"
             onClick={() => setNavSelection("home")}
           >
-            <img src={logo} alt="Logo" height={100} />
+            <Image src={logo} alt="Logo" height={100} />
           </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -22,7 +23,7 @@ function Navigation(props) {
           <Nav className="me-auto">
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("home")}
               >
                 Home
@@ -30,7 +31,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("product")}
               >
                 Our Products
@@ -38,7 +39,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("about")}
               >
                 Who We Are
@@ -46,7 +47,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("contact")}
               >
                 Contact Us!
