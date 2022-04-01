@@ -11,3 +11,5 @@ function Product() {
     </section>
   )
 }
+
+export default Product;
