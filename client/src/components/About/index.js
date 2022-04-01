@@ -1,11 +1,13 @@
 import React from 'react';
-import coverImage from '..assets/logo_main.png';
+import coverImage from '../../assets/Img/logo_main.png';
+import {Container, Row, Col, Image} from "react-bootstrap";
 
 function About() {
   return (
-    <section className="aboutPage">
-      <h1 id="about">About Us</h1>
-      <img src={coverImage} className="mainLogo" style={{ width: "100%" }} alt="cover" />
+    <Container>
+      <Row>
+        <Col><h1 id="about"><style>About Us</style></h1>
+      <Image src={coverImage} className="mx-auto img" /* style={{ width: "50%" }} */ alt="cover" />
       <div className="aboutBody">
         <p>
         OUR HISTORY
@@ -46,7 +48,11 @@ function About() {
             customers we do provide transportation to Trax and Front Runner upon request.
         </p>
       </div>
-    </section>
+        </Col>
+      </Row>
+    </Container>
+    
+      
   );
 }
 
