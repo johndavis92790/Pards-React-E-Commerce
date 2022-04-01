@@ -1,13 +1,13 @@
 import React from 'react';
-import coverImage from '../../assets/Img/logo_main.png';
+import coverImage from '../../assets/Img/about.png';
 import {Container, Row, Col, Image} from "react-bootstrap";
 
 function About() {
   return (
-    <Container>
-      <Row>
-        <Col><h1 id="about"><style>About Us</style></h1>
-      <Image src={coverImage} className="mx-auto img" /* style={{ width: "50%" }} */ alt="cover" />
+    <Container fluid="md">
+      <Row className="text-center">
+        <Col className="mx-auto my-5"><h1 id="about"><style>About Us</style></h1>
+      <Image src={coverImage} className="mx-auto py-4 img" style={{ width: "50%" }} alt="cover" />
       <div className="aboutBody">
         <p>
         OUR HISTORY
