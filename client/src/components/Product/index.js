@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Products() {
+function Product() {
   return (
     <section className="productPage">
     
@@ -11,3 +11,5 @@ function Products() {
     </section>
   )
 }
+
+export default Product;
