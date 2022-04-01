@@ -3,12 +3,12 @@ import "./App.css";
 import React, { useState } from 'react';
 
 //Pages
-// import About from "./components/About"
-// import Contact from "./components/Contact"
+import About from "./components/About"
+import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Home from "./components/Home"
-// import Product from "./components/Product"
+import Product from "./components/Product"
 
 
 function App() {
@@ -29,9 +29,9 @@ function App() {
       </div>
       <main>
         {navSelection === "home" ? <Home></Home> : <></>}
-        {/* {navSelection === "product" ? <Product></Product> : <></>}
+        {navSelection === "product" ? <Product></Product> : <></>}
         {navSelection === "about" ? <About></About> : <></>}
-        {navSelection === "contact" ? <Contact></Contact> : <></>} */}
+        {navSelection === "contact" ? <Contact></Contact> : <></>}
       </main>
       <div className="App-header">
       <Footer setNavSelection={setNavSelection}></Footer>

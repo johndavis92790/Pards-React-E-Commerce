@@ -5,15 +5,15 @@ const userSchema = new Schema({
     type: String,
     unique: true,
     trim: true,
-    allowNull: false,
+    required: true,
   },
-  firstName: {
+  password: {
     type: String,
     trim: true,
-    allowNull: false,
+    required: true,
   },
 });
 
-const User = model("user", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;
