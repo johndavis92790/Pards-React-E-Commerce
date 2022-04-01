@@ -4,8 +4,8 @@ const {
   getCategory,
 } = require("../../controller/categoryController");
 
-router.route("/").get(getCategorys).post(createCategory);
+router.route("/").get(getCategorys)
 
-router.route("/:categoryId").get(getCategory).put().delete();
+// router.route("/:categoryId").get(getCategory).put().delete();
 
 module.exports = router;

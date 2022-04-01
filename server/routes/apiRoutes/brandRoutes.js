@@ -2,10 +2,10 @@ const router = require("express").Router();
 const {
   getBrands,
   getBrand,
-} = require("../../controller/BrandController");
+} = require("../../controller/brandController");
 
-router.route("/").get(getBrands).post(createBrand);
+router.route("/").get(getBrands)
 
-router.route("/:brandId").get(getBrand).put().delete();
+// router.route("/:brandId").get(getBrand).put().delete();
 
 module.exports = router;

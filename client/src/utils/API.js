@@ -1,7 +1,7 @@
 const API = {
-  getUsers: async function () {
+  getParts: async function () {
     try {
-      return fetch("/api/users")
+      return fetch("/api/part")
         .then((response) => {
           return response.json();
         })

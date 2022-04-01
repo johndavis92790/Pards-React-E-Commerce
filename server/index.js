@@ -32,24 +32,27 @@ const csvtojson = require("csvtojson");
 const mongodb = require("mongodb");
 
 // CSV file name
-const csvTest = "./csvTest.csv";
+const csvTest = "./pards-test2.csv";
 var arrayToInsert = [];
 csvtojson().fromFile(csvTest).then(source => {
   // Fetching the all data from each row
   for (var i = 0; i < source.length; i++) {
     var oneRow = {
       partNumber: source[i]["Part Number"],
-      brand: source[i]["Brand Label"]
+      brand: source[i]["Brand Label"],
+      description: source[i]["Title"],
+      category: source[i]["Category (PCDB)"],
+      photo: source[i]["Primary"],
+      // retailPrice: source[i]["Retail"],
     };
     arrayToInsert.push(oneRow);
   }
   var collection = db.collection("parts");
-  console.log("arrayToInsert", arrayToInsert);
-  console.log("collection", collection);
+  // collection.dropDatabase();
   collection.insertMany(arrayToInsert, (err, result) => {
     if (err) console.log(err);
     if (result) {
-      console.log("Import CSV into database successfully.", result);
+      console.log("Import CSV into database successfully.");
     }
   });
 });

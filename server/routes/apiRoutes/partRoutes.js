@@ -4,8 +4,8 @@ const {
   getPart,
 } = require("../../controller/partController");
 
-router.route("/").get(getParts).post(createPart);
+router.route("/").get(getParts)
 
-router.route("/:partId").get(getPart).put().delete();
+// router.route("/:partId").get(getPart).put().delete();
 
 module.exports = router;

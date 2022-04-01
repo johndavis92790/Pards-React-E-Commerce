@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, Types, model } = require("mongoose");
 
 const partSchema = new Schema(
   {
@@ -24,26 +24,34 @@ const partSchema = new Schema(
       type: String,
       allowNull: true,
     },
-    listPrice: {
-      type: Number,
+    category: {
+      type: String,
       allowNull: true,
     },
-    retailPrice: {
-      type: Number,
+    photo: {
+      type: String,
       allowNull: true,
     },
-    jobberPrice: {
-      type: Number,
-      allowNull: true,
-    },
-    sellPrice: {
-      type: Number,
-      allowNull: true,
-    },
-    costPrice: {
-      type: Number,
-      allowNull: true,
-    },
+    // listPrice: {
+    //   type: Types.Decimal128,
+    //   allowNull: true,
+    // },
+    // retailPrice: {
+    //   type: Types.Decimal128,
+    //   allowNull: true,
+    // },
+    // jobberPrice: {
+    //   type: Types.Decimal128,
+    //   allowNull: true,
+    // },
+    // sellPrice: {
+    //   type: Types.Decimal128,
+    //   allowNull: true,
+    // },
+    // costPrice: {
+    //   type: Types.Decimal128,
+    //   allowNull: true,
+    // },
   },
   {
     toJSON: {
