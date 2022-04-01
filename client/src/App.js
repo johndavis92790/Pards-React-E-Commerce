@@ -26,7 +26,9 @@ function App() {
         {navSelection === "contact" ? <Contact></Contact> : <></>}
         {navSelection === "login" ? <Login></Login> : <></>}
       </main>
+      <div className="App-header">
       <Footer setNavSelection={setNavSelection}></Footer>
+      </div>
     </div>
   );
 }

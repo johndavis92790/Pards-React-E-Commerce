@@ -6,7 +6,7 @@ function Footer(props) {
   const { setNavSelection } = props;
 
   return (
-    <Container>
+    <Container className="App-header">
       <Row>
         <Col xs={9}>
           <Navigation setNavSelection={setNavSelection}></Navigation>
