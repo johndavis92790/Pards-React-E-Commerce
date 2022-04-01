@@ -6,8 +6,14 @@ const categorySchema = new Schema({
     trim: true,
     allowNull: false,
   },
+  parts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Part",
+    },
+  ],
 });
 
-const Category = model("category", categorySchema);
+const Category = model("Category", categorySchema);
 
 module.exports = Category;

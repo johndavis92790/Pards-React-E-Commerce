@@ -11,8 +11,14 @@ const brandSchema = new Schema({
     trim: true,
     allowNull: false,
   },
+  parts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Part",
+    },
+  ],
 });
 
-const Brand = model("brand", brandSchema);
+const Brand = model("Brand", brandSchema);
 
 module.exports = Brand;

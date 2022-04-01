@@ -27,3 +27,29 @@ db.once("open", () => {
     console.log(`API server running on port ${PORT}!`);
   });
 });
+
+const csvtojson = require("csvtojson");
+const mongodb = require("mongodb");
+
+// CSV file name
+const csvTest = "./csvTest.csv";
+var arrayToInsert = [];
+csvtojson().fromFile(csvTest).then(source => {
+  // Fetching the all data from each row
+  for (var i = 0; i < source.length; i++) {
+    var oneRow = {
+      partNumber: source[i]["Part Number"],
+      brand: source[i]["Brand Label"]
+    };
+    arrayToInsert.push(oneRow);
+  }
+  var collection = db.collection("parts");
+  console.log("arrayToInsert", arrayToInsert);
+  console.log("collection", collection);
+  collection.insertMany(arrayToInsert, (err, result) => {
+    if (err) console.log(err);
+    if (result) {
+      console.log("Import CSV into database successfully.", result);
+    }
+  });
+});
