@@ -1,6 +1,7 @@
 import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import React from 'react';
 import logo from '../../assets/Img/logo_main.png';
+import '../../App.css'
 
 function Navigation(props) {
   const { setNavSelection } = props;
@@ -22,7 +23,7 @@ function Navigation(props) {
           <Nav className="me-auto">
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("home")}
               >
                 Home
@@ -30,7 +31,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("product")}
               >
                 Our Products
@@ -38,7 +39,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("about")}
               >
                 Who We Are
@@ -46,7 +47,7 @@ function Navigation(props) {
             </Nav.Link>
             <Nav.Link>
               <span
-                className="navText mx-3"
+                className="navText mx-3 text-color"
                 onClick={() => setNavSelection("contact")}
               >
                 Contact Us!
