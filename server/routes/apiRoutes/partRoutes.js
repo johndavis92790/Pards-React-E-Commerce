@@ -6,6 +6,6 @@ const {
 
 router.route("/").get(getParts)
 
-// router.route("/:partId").get(getPart).put().delete();
+router.route("/:partId").get(getPart)
 
 module.exports = router;

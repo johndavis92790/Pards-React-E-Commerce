@@ -49,18 +49,12 @@ function Contact() {
           <h1 className="mb-3">Contact Us</h1>
           <h3 className="mb-4">Pard's Equalizer Trailer Hitch Co.</h3>
 
-          <h5 className="icons mb-3">
-            {/* <FaPhone size={40} className="icons" />
-            &nbsp;&nbsp;&nbsp; */}We have many years of experience and do 
-            high quality work. Reach out to us and see why we come so 
-            highly recommended!
-                
+          <h5 className="mb-3">
+            We have many years of experience and do high quality work. Reach out
+            to us and see why we come so highly recommended!
           </h5>
 
-          <h5 className="icons">
-            {/* <FaEnvelope size={40} className="icons" />
-            &nbsp;&nbsp;&nbsp; */}If you prefer to call our number is 801-262-4864
-          </h5>
+          <h5>If you prefer to call our number is 801-262-4864</h5>
         </Col>
         <Col sm={4}>
           <Form id="contact-form" className="m-4" onSubmit={handleSubmit}>
