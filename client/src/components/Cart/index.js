@@ -198,9 +198,17 @@ const Cart = ({ setProductSelection, productSelection }) => {
                 <FaTrash onClick="" className="icons" />
               </ListGroup.Item>
             </ListGroup>
-            <Button variant="primary" type="submit">
-              Checkout
-            </Button>
+            <Form>
+              <Form.Group className="mb-3" controlId="standardCheckbox">
+                <Form.Check type="checkbox" label="Standard Shipping $25" />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="standardCheckbox">
+                <Form.Check type="checkbox" label="Expedited Shipping $50" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Checkout
+              </Button>
+            </Form>
           </Col>
         </Row>
       </Container>
