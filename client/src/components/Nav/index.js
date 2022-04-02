@@ -61,6 +61,22 @@ function Navigation(props) {
                 Login
               </span>
             </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("single")}
+              >
+                Single
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("cart")}
+              >
+                Cart
+              </span>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
