@@ -17,7 +17,7 @@ module.exports = function dbUpdate() {
     });
   });
   
-  var csvFiles = fs.readdirSync("./seeds/csv/");
+  var csvFiles = fs.readdirSync(__dirname + "/csv/");
   console.log("csvFiles", csvFiles);
 
   csvFiles.map((csv, i) => {
