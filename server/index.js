@@ -3,9 +3,6 @@ const path = require("path");
 const routes = require("./routes");
 const router = require("express").Router();
 const dbUpdate = require("./seeds/dbUpdate");
-const csvDelete = require("./seeds/csvDelete");
-
-const fileUpload = require("express-fileupload");
 
 const db = require("./config/connection");
 
@@ -32,10 +29,6 @@ db.once("open", () => {
   });
 });
 
-app.use(fileUpload());
-
 app.post("/upload", (req, res) => {
-  csvDelete(req, res);
+  dbUpdate(req, res);
 });
-
-dbUpdate();

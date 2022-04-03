@@ -1,17 +1,28 @@
-const path = require("path");
+const db = require("../config/connection");
 
 module.exports = function csvUpload(req, res) {
-  if (!req.files) {
-    return res.status(400).send("No files were uploaded.");
-  }
-  const files = req.files.files;
-  files.map((file) => {
-    const filePath = path.join(__dirname + "/csv/" + file.name);
-    file.mv(filePath, (err) => {
-      if (err) {
-        return res.status(500).send(err);
+  var parsed = JSON.parse(JSON.stringify(req.body));
+  var arrayParts = Object.values(parsed);
+  var collection = db.collection("parts");
+
+  arrayParts.map((part, i) => {
+    var oneRow = {
+      partNumber: arrayParts[i]["Part Number"],
+      brand: arrayParts[i]["Brand Label"],
+      description: arrayParts[i]["Title"],
+      descriptionTwo: arrayParts[i]["Short Description"],
+      category: arrayParts[i]["Category (PCDB)"],
+      photo: arrayParts[i][`Primary\r`],
+      retailPrice: arrayParts[i]["Retail"],
+      mapPrice: arrayParts[i]["MAP"],
+    };
+    collection.insertOne(oneRow, (err, result) => {
+      if (err) console.log(err);
+      if (result) {
+        console.log(
+          "Imported " + oneRow.partNumber + "object into database successfully."
+        );
       }
-      return res.status(200);
     });
   });
-};
+}
