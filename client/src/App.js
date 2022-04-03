@@ -10,9 +10,10 @@ import Home from "./components/Home"
 import Product from "./components/Product"
 import Login from "./components/Login";
 import CreateUser from "./components/CreateUser";
-import SingleProduct from "./components/SingleProduct";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import UploadCSV from "./components/UploadCSV";
+
 
 
 function App() {
@@ -27,9 +28,9 @@ function App() {
       <main>
         {navSelection === "home" ? <Home></Home> : <></>}
         {navSelection === "product" ? <Product></Product> : <></>}
-        {navSelection === "single" ? <SingleProduct></SingleProduct> : <></>}
         {navSelection === "cart" ? <Cart></Cart> : <></>}
         {navSelection === "checkout" ? <Checkout></Checkout> : <></>}
+        {navSelection === "upload" ? <UploadCSV></UploadCSV> : <></>}
         {navSelection === "about" ? <About></About> : <></>}
         {navSelection === "contact" ? <Contact></Contact> : <></>}
         {navSelection === "login" ? (

@@ -1,32 +1,42 @@
 import React from "react";
 // import axios from "axios";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
+import { FaArrowLeft } from "react-icons/fa";
 
 
 const SingleProduct = ({ setProductSelection, productSelection }) => {
+  function mapOrRetail() {
+    if (productSelection.mapPrice === "") {
+      return productSelection.retailPrice;
+    } else {
+      return productSelection.mapPrice;
+    }
+  }
   return (
     <>
       <Container fluid="md" className="my-5">
+        <Button onClick={() => setProductSelection(null)}>
+          <FaArrowLeft /> Back
+        </Button>
         <Row className="align-items-center">
           <Col sm={7} className="p-5">
             <Image
               fluid
-              src={
-                "https://1ddf4b1b856a39e33863-d785dc0e3b62b5e0ef07f55db00b0659.ssl.cf2.rackcdn.com/Air Lift Company/16060_v1_20120101.jpg"
-              }
-              alt="16060"
+              src={productSelection.photo}
+              alt={productSelection.partNumber}
             />
           </Col>
           <Col sm={5}>
             <div>
-              <h1>Air Lift</h1>
-              <h3>Part# 16060</h3>
-              <h6>Air Lift 16060 Black electric 12V Standard Air Compressor</h6>
-              <h5>Category: Suspension</h5>
-              <h5>Part Type: Compressor System</h5>
-              <h4>$104.17</h4>
+              <h1>{productSelection.brand}</h1>
+              <h3 className="mb-4">Part# {productSelection.partNumber}</h3>
+              <h6 className="mb-4">{productSelection.description}</h6>
+              <h5>Part Type: {productSelection.descriptionTwo}</h5>
+              <h5>Category: {productSelection.category}</h5>
+              <h4>{mapOrRetail}</h4>
               <Form.Select
-                style={{width: "110px"}}
+                className="my-4"
+                style={{ width: "110px" }}
                 aria-label="Quantity"
               >
                 <option>Quantity</option>
@@ -46,8 +56,6 @@ const SingleProduct = ({ setProductSelection, productSelection }) => {
           </Col>
         </Row>
       </Container>
-      {/* <p>{productSelection}</p>
-      <button onClick={() => setProductSelection(null)}>Back</button> */}
     </>
   );
 };
