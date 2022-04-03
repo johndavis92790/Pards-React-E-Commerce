@@ -23,7 +23,7 @@ module.exports = function dbUpdate() {
   csvFiles.map((csv, i) => {
     var arrayToInsert = [];
     csvtojson()
-      .fromFile("./seeds/csv/" + csv)
+      .fromFile(__dirname + "/csv/" + csv)
       .then((source) => {
         // Fetching the all data from each row
         for (var i = 0; i < source.length; i++) {
