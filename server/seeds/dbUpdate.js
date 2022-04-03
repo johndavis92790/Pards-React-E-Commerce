@@ -1,6 +1,7 @@
 const db = require("../config/connection");
 var MongoClient = require("mongodb").MongoClient;
 const csvtojson = require("csvtojson");
+const path = require("path");
 var fs = require("fs");
 
 module.exports = function dbUpdate() {
@@ -17,13 +18,13 @@ module.exports = function dbUpdate() {
     });
   });
   
-  var csvFiles = fs.readdirSync(__dirname + "/csv/");
+  var csvFiles = fs.readdirSync(path.join(__dirname + "/csv/"));
   console.log("csvFiles", csvFiles);
 
   csvFiles.map((csv, i) => {
     var arrayToInsert = [];
     csvtojson()
-      .fromFile(__dirname + "/csv/" + csv)
+      .fromFile(path.join(__dirname + "/csv/" + csv))
       .then((source) => {
         // Fetching the all data from each row
         for (var i = 0; i < source.length; i++) {
