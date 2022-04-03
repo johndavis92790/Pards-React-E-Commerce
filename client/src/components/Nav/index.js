@@ -85,6 +85,14 @@ function Navigation(props) {
                 Checkout
               </span>
             </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("upload")}
+              >
+                Upload
+              </span>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

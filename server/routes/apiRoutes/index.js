@@ -5,5 +5,4 @@ const partRoutes = require("./partRoutes");
 router.use("/users", userRoutes);
 router.use("/part", partRoutes);
 
-
 module.exports = router;

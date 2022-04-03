@@ -2,8 +2,10 @@ const express = require("express");
 const path = require("path");
 const routes = require("./routes");
 const router = require("express").Router();
-var MongoClient = require("mongodb").MongoClient;
-const csvtojson = require("csvtojson");
+const dbUpdate = require("./seeds/dbUpdate");
+const csvDelete = require("./seeds/csvDelete");
+
+const fileUpload = require("express-fileupload");
 
 const db = require("./config/connection");
 
@@ -30,44 +32,10 @@ db.once("open", () => {
   });
 });
 
-function dbUpdate() {
-  const dbURL =
-    "mongodb+srv://johndavis92790:$p1d3rMan@cluster0.8kqia.mongodb.net/pardsDB?retryWrites=true&w=majority";
-  
-  MongoClient.connect(dbURL, function (err, dbDrop) {
-    if (err) throw err;
-    var dbo = dbDrop.db("pardsDB");
-    dbo.collection("parts").drop(function (err, delOK) {
-      if (err) throw err;
-      if (delOK) console.log("Collection deleted");
-      dbDrop.close();
-    });
-  });
+app.use(fileUpload());
 
-  // CSV file name
-  const csvTest = "./pards-test2.csv";
-  var arrayToInsert = [];
-  csvtojson()
-    .fromFile(csvTest)
-    .then((source) => {
-      // Fetching the all data from each row
-      for (var i = 0; i < source.length; i++) {
-        var oneRow = {
-          partNumber: source[i]["Part Number"],
-          brand: source[i]["Brand Label"],
-          description: source[i]["Title"],
-          category: source[i]["Category (PCDB)"],
-          photo: source[i]["Primary"],
-          // retailPrice: source[i]["Retail"],
-        };
-        arrayToInsert.push(oneRow);
-      }
-      var collection = db.collection("parts");
-      collection.insertMany(arrayToInsert, (err, result) => {
-        if (err) console.log(err);
-        if (result) {
-          console.log("Import CSV into database successfully.");
-        }
-      });
-    });
-}
+app.post("/upload", (req, res) => {
+  csvDelete(req, res);
+});
+
+dbUpdate();

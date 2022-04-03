@@ -8,30 +8,16 @@ import {
   Container,
   Row,
   Pagination,
-  Button
+  Button,
 } from "react-bootstrap";
 
 const Product = () => {
   const [parts, setParts] = useState([]);
-  const pages = parts.length() % 25;
-  for(let number = 1; number < pages; number++){
-    
+  // const pages = parts.length() % 25;
+  // for(let number = 1; number < pages; number++){
 
-  }
-  const [productSelection, setProductSelection] = useState([]);
-
-  const handleChange = (e) => {
-    console.log("e", e);
-    setProductSelection((e) => ({
-      brand: e.brand,
-      category: e.category,
-      description: e.description,
-      partNumber: e.partNumber,
-      photo: e.photo,
-      _id: e._id,
-    }));
-    console.log("productSelection2", productSelection);
-  };
+  // }
+  const [productSelection, setProductSelection] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -44,24 +30,34 @@ const Product = () => {
     }
     fetchData();
   }, []);
+
   return (
     <>
-      {!productSelection ? (
+      {productSelection ? (
         <SingleProduct
           setProductSelection={setProductSelection}
           productSelection={productSelection}
         ></SingleProduct>
       ) : (
         <Container fluid className="m-3">
+          <Row className="justify-content-center" >test</Row>
           <Row className="justify-content-center">
             {parts.map((part, i) => {
               return (
                 <Card
-                  className="m-3"
                   style={{ width: "18rem" }}
+                  className="card m-3"
                   key={part.partNumber}
                 >
-                  <Card.Img variant="top" src={part.photo} />
+                  <Card.Img
+                    style={{ cursor: "pointer" }}
+                    className="p-3"
+                    onClick={() => {
+                      setProductSelection({ ...part, index: i });
+                    }}
+                    variant="top"
+                    src={part.photo}
+                  />
                   <Card.Body>
                     <Card.Title>{part.partNumber}</Card.Title>
                     <Card.Text>{part.description}</Card.Text>
@@ -69,20 +65,16 @@ const Product = () => {
                   <ListGroup className="list-group-flush">
                     <ListGroupItem>{part.brand}</ListGroupItem>
                     <ListGroupItem>{part.category}</ListGroupItem>
-                    {/* <ListGroupItem>{part.retailPrice}</ListGroupItem> */}
-                  </ListGroup>
-                  <Card.Body>
+                    <ListGroupItem>${part.retailPrice}</ListGroupItem>
                     <Button
                       onClick={() => {
-                        console.log("part", part);
-                        setProductSelection({...part, index: i});
-                        console.log("productSelection", productSelection);
-                        // handleChange(part);
+                        console.log("test");
                       }}
+                      variant="outline-primary"
                     >
-                      Select Part
+                      Add to Cart
                     </Button>
-                  </Card.Body>
+                  </ListGroup>
                 </Card>
               );
             })}
