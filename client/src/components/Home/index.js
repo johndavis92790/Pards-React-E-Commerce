@@ -7,11 +7,18 @@ import hero from "../../assets/Img/hero3.jpg";
 function Home() {
   return (
     <>
-      <Image className="w-100 background" src={hero} alt="Hero"></Image>
-      <div className="text-color text-style">
-        <h1>Welcome to Pards</h1>
-        <h2>Your partner in hitches, vehicle wiring, and trailer repair</h2>
-      </div>
+      <section className="bgimage">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="text-style">
+              <h1>Welcome to Pards</h1>
+              <h2>
+                Your partner in hitches, vehicle wiring, and trailer repair
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
       <Container fluid="md">
         <Row className="text-center">
           <Col className="mx-auto my-5" sm={6}>
