@@ -7,7 +7,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(9px + 2vmin);
+}
+.App-footer {
+  background-color: #00335A;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: calc(3px + 2vmin);
 }
 
 .text-color {

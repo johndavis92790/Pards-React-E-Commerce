@@ -40,7 +40,7 @@ function App() {
         )}
         {navSelection === "create" ? <CreateUser></CreateUser> : <></>}
       </main>
-      <div className="App-header">
+      <div className="App-footer">
         <Footer setNavSelection={setNavSelection}></Footer>
       </div>
     </div>

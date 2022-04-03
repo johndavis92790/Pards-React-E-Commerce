@@ -1,10 +1,11 @@
 const csvUpload = require("./csvUpload");
+const path = require("path");
 
 module.exports = function csvDelete(req, res) {
   const fs = require("fs");
   const path = require("path");
 
-  const directory = __dirname + "/csv/";
+  const directory = path.join(__dirname + "/csv/");
 
   fs.readdir(directory, (err, files) => {
     if (err) throw err;
