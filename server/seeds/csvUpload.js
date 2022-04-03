@@ -9,7 +9,7 @@ module.exports = function csvUpload(req, res) {
       if (err) {
         return res.status(500).send(err);
       }
-      return res.status(200);
+      return res.status(200).send();
     });
   })
 };
