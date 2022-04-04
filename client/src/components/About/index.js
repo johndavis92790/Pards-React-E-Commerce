@@ -9,8 +9,8 @@ function About() {
         <Col className="mx-auto my-5"><h1 id="about"><style>About Us</style></h1>
       <Image src={coverImage} className="mx-auto py-4 img" style={{ width: "50%" }} alt="cover" />
       <div className="aboutBody">
-        <p>
-        OUR HISTORY
+        <p className="mb-0">
+        OUR HISTORY <p></p>
 
             Pard's Equalizer Trailer Hitch Co., Inc. was started in 1977 at Pard's backyard 
             in Midvale, Utah. Although affectionately known as Pard, his name is actually 
