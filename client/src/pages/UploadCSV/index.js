@@ -1,4 +1,5 @@
 import ReactFileReader from "react-file-reader";
+import "../../App.css"
 
 function UploadCSV() {
   const readAllFiles = async (allFiles) => {
@@ -38,7 +39,7 @@ function UploadCSV() {
   }
 
   return (
-    <>
+    <div className="uploadPage">
       <h1>Express File Upload</h1>
       <ReactFileReader
         multipleFiles={true}
@@ -47,7 +48,7 @@ function UploadCSV() {
       >
         <button className="btn">Upload</button>
       </ReactFileReader>
-    </>
+    </div>
   );
 }
 

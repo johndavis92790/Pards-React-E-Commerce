@@ -13,7 +13,7 @@ function Footer({ setProductSelection }) {
             <Image src={logo} alt="Logo" height={150} />
           </span>
         </Navbar.Brand>
-        <Nav className="me-auto">
+        <Nav className="me-auto align">
           <Navbar.Text className="text-center text-color">
             <a href="https://www.google.com/maps/place/5910+300+W,+Murray,+UT+84107">
               5910 S 300 W
