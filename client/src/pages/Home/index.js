@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Image, Row, Col } from "react-bootstrap";
 import "../../App.css";
 import icon from "../../assets/Img/hitch2.jpg";
-// import hero from "../../assets/Img/hero3.jpg";
 
 function Home() {
   return (
