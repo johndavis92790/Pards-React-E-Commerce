@@ -1,49 +1,75 @@
 import "./App.css";
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Route, Routes, BrowserRouter as Router, Link } from "react-router-dom";
 
 //Pages
-import About from "./components/About"
-import Contact from "./components/Contact"
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Home from "./components/Home"
-import Product from "./components/Product"
-import Login from "./components/Login";
-import CreateUser from "./components/CreateUser";
-import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
-import UploadCSV from "./components/UploadCSV";
-
-
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Product from "./pages/Product";
+import Login from "./pages/Login";
+import CreateUser from "./pages/CreateUser";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import UploadCSV from "./pages/UploadCSV";
+import SingleProduct from "./pages/SingleProduct";
+import Orders from "./pages/Orders";
+import { CartProvider } from "./components/CartContext";
 
 function App() {
+  
+  const [productSelection, setProductSelection] = useState();
 
-  const [navSelection, setNavSelection] = useState('home');
+  
+
+  // {
+  //   _id: {
+  //     part: {...},
+  //     quantity: 1
+  //   }
+  // }
+
+  // cart[_id].quantity = 2;
+  // delete cart[_id];
 
   return (
-    <div>
-      <div className="App-header">
-        <Header setNavSelection={setNavSelection}></Header>
-      </div>
-      <main>
-        {navSelection === "home" ? <Home></Home> : <></>}
-        {navSelection === "product" ? <Product></Product> : <></>}
-        {navSelection === "cart" ? <Cart></Cart> : <></>}
-        {navSelection === "checkout" ? <Checkout></Checkout> : <></>}
-        {navSelection === "upload" ? <UploadCSV></UploadCSV> : <></>}
-        {navSelection === "about" ? <About></About> : <></>}
-        {navSelection === "contact" ? <Contact></Contact> : <></>}
-        {navSelection === "login" ? (
-          <Login setNavSelection={setNavSelection}></Login>
-        ) : (
-          <></>
-        )}
-        {navSelection === "create" ? <CreateUser></CreateUser> : <></>}
-      </main>
-      <div className="App-footer">
-        <Footer setNavSelection={setNavSelection}></Footer>
-      </div>
-    </div>
+    <Router>
+      <CartProvider>
+        <div className="App-header">
+          <Header></Header>
+        </div>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route
+            path="/product"
+            element={
+              <Product value={{ productSelection, setProductSelection }} />
+            }
+          />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/upload" element={<UploadCSV />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/create" element={<CreateUser />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route
+            path="/single"
+            element={
+              <SingleProduct
+                value={{ productSelection, setProductSelection }}
+              />
+            }
+          />
+        </Routes>
+        <div className="App-footer">
+          <Footer></Footer>
+        </div>
+      </CartProvider>
+    </Router>
   );
 }
 
