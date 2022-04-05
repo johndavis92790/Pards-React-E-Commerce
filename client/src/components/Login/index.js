@@ -24,9 +24,13 @@ function Login(props) {
               Login
             </Button>
           </Form>
-          <span className="my-3" onClick={() => setNavSelection("create")}>
-            Home
-          </span>
+          <Button
+            variant="primary"
+            className="my-3"
+            onClick={() => setNavSelection("create")}
+          >
+            Create New User
+          </Button>
         </Col>
       </Row>
     </Container>

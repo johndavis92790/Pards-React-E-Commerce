@@ -8,7 +8,7 @@ function Navigation(props) {
 
   return (
     <Navbar expand="lg">
-      <Container>
+      <Container fluid>
         <Navbar.Brand>
           <span
             style={{ cursor: "pointer" }}
@@ -59,6 +59,38 @@ function Navigation(props) {
                 onClick={() => setNavSelection("login")}
               >
                 Login
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("single")}
+              >
+                Single
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("cart")}
+              >
+                Cart
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("checkout")}
+              >
+                Checkout
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navText mx-3 text-color"
+                onClick={() => setNavSelection("upload")}
+              >
+                Upload
               </span>
             </Nav.Link>
           </Nav>

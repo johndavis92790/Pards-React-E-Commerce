@@ -32,26 +32,14 @@ const partSchema = new Schema(
       type: String,
       allowNull: true,
     },
-    // listPrice: {
-    //   type: Types.Decimal128,
-    //   allowNull: true,
-    // },
-    // retailPrice: {
-    //   type: Types.Decimal128,
-    //   allowNull: true,
-    // },
-    // jobberPrice: {
-    //   type: Types.Decimal128,
-    //   allowNull: true,
-    // },
-    // sellPrice: {
-    //   type: Types.Decimal128,
-    //   allowNull: true,
-    // },
-    // costPrice: {
-    //   type: Types.Decimal128,
-    //   allowNull: true,
-    // },
+    retailPrice: {
+      type: String,
+      allowNull: true,
+    },
+    mapPrice: {
+      type: String,
+      allowNull: true,
+    },
   },
   {
     toJSON: {
