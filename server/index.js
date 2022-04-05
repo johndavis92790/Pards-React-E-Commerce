@@ -1,4 +1,5 @@
 const express = require("express");
+var bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
 const router = require("express").Router();
@@ -10,6 +11,15 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 app.use(express.json());
 
 // Serve up static assets
