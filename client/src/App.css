@@ -1,8 +1,8 @@
 .homeApp {
-  color: #00335A;
+  color: #00335a;
 }
 .App-header {
-  background-color: #00335A;
+  background-color: #00335a;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -10,16 +10,20 @@
   font-size: calc(9px + 2vmin);
 }
 .App-footer {
-  background-color: #00335A;
+  background-color: #00335a;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   font-size: calc(3px + 2vmin);
+  position: relative;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .text-color {
-  color: #EEBC4C;
+  color: #eebc4c;
 }
 
 .img {
@@ -29,12 +33,12 @@
 }
 
 .bgimage {
-  width:100%;
-  height:500px;
+  width: 100%;
+  height: 500px;
   background-image: url("./assets/Img/hero3.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size:cover;
+  background-size: cover;
 }
 
 .background {
@@ -43,16 +47,28 @@
 
 .text-style {
   top: 50%;
-  color: #EEBC4C;
+  color: #eebc4c;
   text-align: center;
 }
 
 body {
-  background-color: #f6f9fb!important;
+  background-color: #f6f9fb !important;
 }
 .text-small {
   font-size: 0.9rem;
 }
 .rounded {
   border-radius: 1rem;
+}
+
+.uploadPage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.align {
+  align-items: center;
 }
