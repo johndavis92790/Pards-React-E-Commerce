@@ -1,11 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
-import { useShoppingCart } from "../../components/CartContext";
+import { useShoppingCart } from "../../components/Context/CartContext";
 import { FaArrowLeft } from "react-icons/fa";
 
-const SingleProduct = ({ setProductSelection, productSelection }) => {
+const SingleProduct = (props) => {
+  // console.log("props", props);
 
-  const { add } = useShoppingCart();
+  // var partId = props.data.target.dataset.part
+  // return null;
+
+  const [part, setPart] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get("/api/part/");
+        setPart(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // const [singleProduct, setSingleProduct] = useState();
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const res = await axios.get("/api/part");
+  //       setParts(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  // function selectProduct(item) {
+  //   setSingleProduct((prevItem) => {
+  //     prevItem = item;
+  //     console.log("prevItem", prevItem);
+  //     return prevItem;
+  //   });
+  // }
+
+  // function returnProduct() {
+  //   console.log("singleProduct", singleProduct);
+  //   return singleProduct;
+  // }
+
+  const cart = useShoppingCart();
 
   function mapOrRetail(product) {
     if (product.mapPrice === "") {
@@ -16,25 +61,25 @@ const SingleProduct = ({ setProductSelection, productSelection }) => {
   }
   return (
     <Container fluid="md" className="my-5">
-      <Button onClick={() => setProductSelection(null)}>
+      <Button>
         <FaArrowLeft /> Back
       </Button>
       <Row className="align-items-center">
         <Col sm={7} className="p-5">
           <Image
             fluid
-            src={productSelection.photo}
-            alt={productSelection.partNumber}
+            src={part.photo}
+            alt={part.partNumber}
           />
         </Col>
         <Col sm={5}>
           <div>
-            <h1>{productSelection.brand}</h1>
-            <h3 className="mb-4">Part# {productSelection.partNumber}</h3>
-            <h6 className="mb-4">{productSelection.description}</h6>
-            <h5>Part Type: {productSelection.descriptionTwo}</h5>
-            <h5>Category: {productSelection.category}</h5>
-            <h4>Price: ${mapOrRetail(productSelection)}</h4>
+            <h1>{part.brand}</h1>
+            <h3 className="mb-4">Part# {part.partNumber}</h3>
+            <h6 className="mb-4">{part.description}</h6>
+            <h5>Part Type: {part.descriptionTwo}</h5>
+            <h5>Category: {part.category}</h5>
+            <h4>Price: ${mapOrRetail(part)}</h4>
             <Form.Select
               className="my-4"
               style={{ width: "110px" }}
@@ -52,7 +97,9 @@ const SingleProduct = ({ setProductSelection, productSelection }) => {
               <option value="9">9</option>
               <option value="10">10</option>
             </Form.Select>
-            <Button onClick={add(productSelection)}>Add to Cart</Button>
+            <Button onClick={() => cart.addItem(part)}>
+              Add to Cart
+            </Button>
           </div>
         </Col>
       </Row>

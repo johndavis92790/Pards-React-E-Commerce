@@ -1,6 +1,7 @@
 import React from "react";
 import { statesArray } from "../../utils/helpers";
-import { useShoppingCart } from "../../components/CartContext";
+import { useShoppingCart } from "../../components/Context/CartContext";
+import { useCustomerInfo } from "../../components/Context/CustomerContext";
 import { FaTrash } from "react-icons/fa";
 import {
   Container,
@@ -13,11 +14,16 @@ import {
 } from "react-bootstrap";
 
 const Cart = () => {
+
   const cart = useShoppingCart();
+  const customerInfo = useCustomerInfo();
+  // console.log("customerInfo", customerInfo);
 
   const formData = (event) => {
+    console.log("event", event);
     event.preventDefault();
     var form = event.target;
+    console.log("form", form);
     var customerObj = {
       billingFirstName: form.formGridBillingFName.value,
       billingLastName: form.formGridBillingLName.value,
@@ -38,55 +44,14 @@ const Cart = () => {
       // standardShipCheckbox: form.standardShipCheckbox.checked,
       // expeditedShipCheckbox: form.expeditedShipCheckbox.checked,
     };
-    cart.addCustomerInfo(customerObj);
-    console.log("shoppingCart", cart.shoppingCart);
+    console.log("customerObj", customerObj);
+    // customerInfo.addCustomerInfo(customerObj);
+    function addObj() {
+      console.log("customerInfo cart", customerInfo);
+      customerInfo.addCustomerInfo(customerObj);
+    };
+    addObj();
   };
-
-  function itemsLoop(items) {
-    console.log("shoppingCart", cart.shoppingCart);
-
-    for (const property in items) {
-      console.log(`${property}: ${items[property]}`);
-      return (
-        <ListGroup.Item>
-          <Image
-            fluid
-            style={{ height: "50px" }}
-            src={items[property].part.photo}
-            alt={items[property].part.partNumber}
-            key={items[property]}
-          />
-          {items[property].part.partNumber} x {items[property].quantity}
-          <FaTrash
-            style={{ cursor: "pointer" }}
-            onClick={cart.removeItem(items[property].part)}
-            className="icons"
-          />
-        </ListGroup.Item>
-      );
-    }
-
-    //   // {
-    //   //   _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   },
-    //   //    _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   },
-    //   //    _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   }
-    //   // }
-
-    //   for (let item in shoppingCart) {
-    //     console.log("item", item);
-
-    //
-    //   }
-  }
 
   return (
     <>
@@ -196,14 +161,38 @@ const Cart = () => {
               <Form.Group className="mb-3" controlId="expeditedShipCheckbox">
                 <Form.Check type="checkbox" label="Expedited Shipping $50" />
               </Form.Group>
-              <Button variant="primary" type="submit" to="/checkout">
+              <Button
+                variant="primary"
+                type="submit"
+                // to="/checkout"
+              >
                 Checkout
               </Button>
             </Form>
           </Col>
           <Col sm={5}>
             <h3>Order Summary</h3>
-            <ListGroup>{itemsLoop(cart.shoppingCart)}</ListGroup>
+            <ListGroup>
+              {cart.shoppingCart.map((item, i) => {
+                return (
+                  <ListGroup.Item>
+                    <Image
+                      fluid
+                      style={{ height: "50px" }}
+                      src={item.photo}
+                      alt={item.partNumber}
+                      key={item._id}
+                    />
+                    {item.partNumber} x {item.quantity}
+                    <FaTrash
+                      style={{ cursor: "pointer" }}
+                      onClick={cart.removeItem(item)}
+                      className="icons"
+                    />
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
           </Col>
         </Row>
       </Container>

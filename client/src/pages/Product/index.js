@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useShoppingCart } from "../../components/CartContext";
+import { Link } from "react-router-dom";
+import { useShoppingCart } from "../../components/Context/CartContext";
 import axios from "axios";
+import SingleProduct from "../SingleProduct";
 import {
   Card,
   ListGroup,
   ListGroupItem,
   Container,
   Row,
-  Pagination,
   Button,
 } from "react-bootstrap";
 
-const Product = ({ setProductSelection }) => {
+const Product = () => {
   const [parts, setParts] = useState([]);
-  // const pages = parts.length() % 25;
-  // for(let number = 1; number < pages; number++){
-
-  // }
   const cart = useShoppingCart();
 
   useEffect(() => {
@@ -33,6 +30,7 @@ const Product = ({ setProductSelection }) => {
 
   return (
     <>
+      {/* <SingleProduct data={part.data}/> */}
       <Button
         onClick={() => {
           cart.clearCart();
@@ -60,14 +58,13 @@ const Product = ({ setProductSelection }) => {
                 key={part._id}
               >
                 <Card.Img
-                  style={{ cursor: "pointer" }}
                   className="p-3"
-                  onClick={() => {
-                    setProductSelection({ ...part, index: i });
-                  }}
                   variant="top"
                   src={part.photo}
-                  to="/single"
+                  style={{ cursor: "pointer" }}
+                  path={"/single/" + part.partNumber}
+                  data-part={part._id}
+                  // onClick={changePart}
                 />
                 <Card.Body>
                   <Card.Title>{part.partNumber}</Card.Title>
@@ -78,7 +75,9 @@ const Product = ({ setProductSelection }) => {
                   <ListGroupItem>{part.category}</ListGroupItem>
                   <ListGroupItem>${part.retailPrice}</ListGroupItem>
                   <Button
-                    onClick={() => cart.addItem(part)}
+                    onClick={() => {
+                      cart.addItem(part)
+                    }}
                     variant="outline-primary"
                   >
                     Add to Cart

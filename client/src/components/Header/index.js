@@ -1,13 +1,11 @@
 import Navigation from "../Nav";
 import React from 'react';
 
-function Header(props) {
-  const { setNavSelection } = props;
+function Header() {
 
   return (
     <header>
       <Navigation
-        setNavSelection={setNavSelection}
       ></Navigation>
     </header>
   );

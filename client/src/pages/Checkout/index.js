@@ -1,5 +1,5 @@
 import React from "react";
-import { useShoppingCart } from "../../components/CartContext";
+import { useShoppingCart } from "../../components/Context/CartContext";
 import {
   Container,
   Row,

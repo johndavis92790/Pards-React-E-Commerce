@@ -16,23 +16,24 @@ import Checkout from "./pages/Checkout";
 import UploadCSV from "./pages/UploadCSV";
 import SingleProduct from "./pages/SingleProduct";
 import Orders from "./pages/Orders";
-import { CartProvider } from "./components/CartContext";
+import { CartProvider } from "./components/Context/CartContext";
 
 function App() {
   
-  const [productSelection, setProductSelection] = useState();
+  // const [singleProduct, setSingleProduct] = useState();
 
-  
-
-  // {
-  //   _id: {
-  //     part: {...},
-  //     quantity: 1
-  //   }
+  // function selectProduct(item) {
+  //   setSingleProduct(prevItem => {
+  //     prevItem = item
+  //     console.log("prevItem", prevItem);
+  //     return prevItem;
+  //   });
   // }
 
-  // cart[_id].quantity = 2;
-  // delete cart[_id];
+  // function returnProduct() {
+  //   console.log("singleProduct", singleProduct);
+  //   return singleProduct;
+  // }
 
   return (
     <Router>
@@ -44,9 +45,7 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route
             path="/product"
-            element={
-              <Product value={{ productSelection, setProductSelection }} />
-            }
+            element={<Product />}
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
@@ -56,14 +55,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create" element={<CreateUser />} />
           <Route path="/orders" element={<Orders />} />
-          <Route
-            path="/single"
-            element={
-              <SingleProduct
-                value={{ productSelection, setProductSelection }}
-              />
-            }
-          />
         </Routes>
         <div className="App-footer">
           <Footer></Footer>
