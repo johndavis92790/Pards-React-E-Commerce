@@ -1,12 +1,11 @@
 require('dotenv').config()
 
 const express = require("express");
+require('dotenv').config()
 var bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
 const router = require("express").Router();
-var MongoClient = require("mongodb").MongoClient;
-const csvtojson = require("csvtojson");
 const jwt = require("jsonwebtoken");
 const dbUpdate = require("./seeds/dbUpdate");
 

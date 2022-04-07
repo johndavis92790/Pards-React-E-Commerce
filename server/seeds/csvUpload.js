@@ -5,17 +5,24 @@ module.exports = function csvUpload(req, res) {
   var arrayParts = Object.values(parsed);
   var collection = db.collection("parts");
 
+  function priceToCents(price) {
+    var dollars = parseFloat(price);
+    var cents = dollars * 100;
+    return cents;
+  }
+
   // TODO: this code could be cleaner (use forEach or a for loop)
   arrayParts.map((part, i) => {
     var oneRow = {
-      partNumber: arrayParts[i]["Part Number"],
-      brand: arrayParts[i]["Brand Label"],
-      description: arrayParts[i]["Title"],
-      descriptionTwo: arrayParts[i]["Short Description"],
-      category: arrayParts[i]["Category (PCDB)"],
-      photo: arrayParts[i][`Primary\r`],
-      retailPrice: arrayParts[i]["Retail"],
-      mapPrice: arrayParts[i]["MAP"]
+      partNumber: part["Part Number"],
+      brand: part["Brand Label"],
+      description: part["Title"],
+      descriptionTwo: part["Short Description"],
+      category: part["Category (PCDB)"],
+      photo: part[`Primary\r`],
+      retailPrice: part["Retail"],
+      mapPrice: part["MAP"],
+      priceInCents: priceToCents(part["Retail"]),
     };
     collection.insertOne(oneRow, (err, result) => {
       if (err) console.log(err);

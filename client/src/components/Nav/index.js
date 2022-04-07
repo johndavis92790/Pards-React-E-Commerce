@@ -24,17 +24,14 @@ function Navigation() {
             <Nav.Link as={Link} to="/">
               <span className="navText mx-3 text-color">Home</span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/product">
-              <span className="navText mx-3 text-color">Our Products</span>
-            </Nav.Link>
             <Nav.Link as={Link} to="/about">
               <span className="navText mx-3 text-color">Who We Are</span>
             </Nav.Link>
+            <Nav.Link as={Link} to="/product">
+              <span className="navText mx-3 text-color">Our Products</span>
+            </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               <span className="navText mx-3 text-color">Contact Us!</span>
-            </Nav.Link>
-            <Nav.Link as={Link} to="/single">
-              <span className="navText mx-3 text-color">Single Part</span>
             </Nav.Link>
             <Nav.Link as={Link} to="/cart">
               <span className="navText mx-3 text-color">Cart</span>

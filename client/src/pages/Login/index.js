@@ -1,9 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-
-function Login(props) {
-  const { setNavSelection } = props;
+function Login() {
   return (
     <Container fluid="md">
       <Row>
@@ -24,13 +23,11 @@ function Login(props) {
               Login
             </Button>
           </Form>
-          <Button
-            variant="primary"
-            className="my-3"
-            onClick={() => setNavSelection("create")}
-          >
-            Create New User
-          </Button>
+          <Link to={"/create"}>
+            <Button variant="primary" className="my-3">
+              Create New User
+            </Button>
+          </Link>
         </Col>
       </Row>
     </Container>

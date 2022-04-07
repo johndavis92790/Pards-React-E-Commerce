@@ -1,54 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import { useShoppingCart } from "../../components/Context/CartContext";
 import { FaArrowLeft } from "react-icons/fa";
 
 const SingleProduct = (props) => {
-  // console.log("props", props);
 
-  // var partId = props.data.target.dataset.part
-  // return null;
+  const { partId } = useParams();
 
   const [part, setPart] = useState({});
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get("/api/part/");
+        const res = await axios.get(`/api/part/${partId}`);
         setPart(res.data);
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
-  }, []);
-
-  // const [singleProduct, setSingleProduct] = useState();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const res = await axios.get("/api/part");
-  //       setParts(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
-
-  // function selectProduct(item) {
-  //   setSingleProduct((prevItem) => {
-  //     prevItem = item;
-  //     console.log("prevItem", prevItem);
-  //     return prevItem;
-  //   });
-  // }
-
-  // function returnProduct() {
-  //   console.log("singleProduct", singleProduct);
-  //   return singleProduct;
-  // }
+  }, [partId]);
 
   const cart = useShoppingCart();
 
@@ -61,16 +33,12 @@ const SingleProduct = (props) => {
   }
   return (
     <Container fluid="md" className="my-5">
-      <Button>
+      <Button as={Link} to="/product">
         <FaArrowLeft /> Back
       </Button>
       <Row className="align-items-center">
         <Col sm={7} className="p-5">
-          <Image
-            fluid
-            src={part.photo}
-            alt={part.partNumber}
-          />
+          <Image fluid src={part.photo} alt={part.partNumber} />
         </Col>
         <Col sm={5}>
           <div>
@@ -97,7 +65,7 @@ const SingleProduct = (props) => {
               <option value="9">9</option>
               <option value="10">10</option>
             </Form.Select>
-            <Button onClick={() => cart.addItem(part)}>
+            <Button as={Link} to="/cart" onClick={() => cart.addItem(part)}>
               Add to Cart
             </Button>
           </div>

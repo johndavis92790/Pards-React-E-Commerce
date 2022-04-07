@@ -11,7 +11,7 @@ import {
   Form,
 } from "react-bootstrap";
 
-const Orders = () => {
+const CompletedOrders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const Orders = () => {
     }
     fetchData();
   }, []);
-
   function refreshPage() {
     window.location.reload(false);
   }
@@ -38,58 +37,11 @@ const Orders = () => {
       refreshPage();
       console.log(res.data);
       window.alert("Order deleted!");
-      this.props.history.push("/orders");
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const shipOrder = (event) => {
-    var form = event.target;
-    
-    var trackingObj = { status: `Shipped`, tracking: form.formTracking.value };
-    try {
-      const res = axios.put(
-        `/api/order/${form.trackingButton.value}`,
-        trackingObj
-      );
-      console.log(res.data);
-      window.alert("Order shipped!");
-      this.props.history.push("/orders");
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const completeOrder = (event) => {
-    var orderId = event.target.attributes.value.value;
-    try {
-      const res = axios.put(`/api/order/${orderId}`, { status: `Completed` });
-      
-      console.log(res.data);
-      window.alert("Order completed!");
-      refreshPage();
-      // this.props.history.push('/orders');
+      this.props.history.push("/completed");
     } catch (err) {
       console.log(err);
     }
   };
-
-  function statusColor(order) {
-    if (order.status === "Open") {
-      return (
-        <Card.Title style={{ backgroundColor: "#ccffcc" }}>
-          Order Status - {order.status}
-        </Card.Title>
-      );
-    } else {
-      return (
-        <Card.Title style={{ backgroundColor: "#ffffcc" }}>
-          Order Status - {order.status}
-        </Card.Title>
-      );
-    }
-  }
 
   return (
     <Container className="m-3">
@@ -104,25 +56,29 @@ const Orders = () => {
       </Row>
       <Row>
         <Col className="col-sm-6 mx-auto">
-          <h2>Open Orders</h2>
+          <h2>Completed Orders</h2>
         </Col>
       </Row>
       <Row>
         {orders.map((order, i) => {
-          if (order.status === "Deleted") {
-            return <></>;
-          } else if (order.status === "Completed") {
-            return <></>;
-          } else {
+          if (order.status === "Completed") {
             return (
               <Card className="m-4">
                 <Card.Header>Order #{order.orderNumber}</Card.Header>
                 <Card.Body>
-                  {statusColor(order)}
+                  <Card.Title style={{ backgroundColor: "#ff8080" }}>
+                    Order Status - {order.status}
+                  </Card.Title>
                   <Card.Text>
                     <Row>
                       <Col sm={3}>
-                        <Table striped bordered hover size="sm">
+                        <Table
+                          // style={{ width: "18rem" }}
+                          striped
+                          bordered
+                          hover
+                          size="sm"
+                        >
                           <thead>
                             <tr>
                               <th>Quantity</th>
@@ -181,38 +137,8 @@ const Orders = () => {
                       </Col>
                     </Row>
                   </Card.Text>
-                  <Form onSubmit={shipOrder}>
+                  <Form>
                     <Row>
-                      <Col>
-                        <Form.Group className="mb-3" controlId="formTracking">
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter tracking number"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col>
-                        <Button
-                          type="submit"
-                          id="trackingButton"
-                          value={order._id}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Order Shipped
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          onClick={completeOrder}
-                          id="completeButton"
-                          value={order._id}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Order Completed
-                        </Button>
-                      </Col>
                       <Col>
                         <Button
                           href={`mailto:${order.billingEmail}`}
@@ -238,6 +164,8 @@ const Orders = () => {
                 </Card.Body>
               </Card>
             );
+          } else {
+            return <></>;
           }
         })}
       </Row>
@@ -245,4 +173,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default CompletedOrders;

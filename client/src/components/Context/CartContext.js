@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 const CartContext = React.createContext();
 
@@ -9,8 +9,22 @@ export function useShoppingCart() {
 export function CartProvider({ children }) {
   const [shoppingCart, setShoppingCart] = useState([]);
 
+  useEffect(() => {
+    const data = localStorage.getItem("shoppingCart");
+
+    if (data) {
+      setShoppingCart(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("test")
+    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  }, [shoppingCart]);
+
   function addItem(item) {
     setShoppingCart((previousShoppingCart) => {
+      window.alert("Product added to cart!")
       var forLoop = false;
       if (previousShoppingCart.length === 0) {
         previousShoppingCart.push(item);
@@ -31,35 +45,56 @@ export function CartProvider({ children }) {
         } else {
           item.quantity = 1;
           previousShoppingCart.push(item);
-          return previousShoppingCart;
+          return [...previousShoppingCart];
         }
       }
     });
   }
-  function removeItem(item) {
+
+  function changeQuantity(event, item) {
     setShoppingCart((previousShoppingCart) => {
-      // previousShoppingCart.items.filter(item);
-      // console.log("previousShoppingCart after removing", previousShoppingCart);
-      return previousShoppingCart;
+      var quantity = parseInt(event.target.formQuantity.value);
+      if (quantity === 0) {
+        var newShoppingCart = previousShoppingCart.filter(function (i) {
+          return i._id !== item._id;
+        });
+        return newShoppingCart;
+      } else {
+        return previousShoppingCart.map((part) => {
+          if (part._id === item._id) {
+            part.quantity = quantity;
+          }
+          return part;
+        })
+      }
     });
   }
-  
+
+  function removeItem(item) {
+    setShoppingCart((previousShoppingCart) => {
+      var newShoppingCart = previousShoppingCart.filter(function (i) {
+        return i._id !== item._id;
+      });
+      return newShoppingCart;
+    });
+  }
+
   function clearCart() {
     setShoppingCart((previousShoppingCart) => {
       previousShoppingCart = [];
-      console.log("shoppingCart cleared", previousShoppingCart);
-      return previousShoppingCart;
+      return [...previousShoppingCart];
     });
   }
+
   return (
     <CartContext.Provider
       value={{
+        setShoppingCart,
+        changeQuantity,
         clearCart,
         addItem,
         removeItem,
-
         shoppingCart,
-
       }}
     >
       {children}
