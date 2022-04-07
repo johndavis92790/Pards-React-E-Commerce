@@ -36,14 +36,34 @@ export function CartProvider({ children }) {
       }
     });
   }
-  function removeItem(item) {
+
+  function changeQuantity(item) {
     setShoppingCart((previousShoppingCart) => {
-      // previousShoppingCart.items.filter(item);
-      // console.log("previousShoppingCart after removing", previousShoppingCart);
-      return previousShoppingCart;
+      console.log("item", item);
+      console.log("previousShoppingCart", previousShoppingCart);
+      if (item.quantity === 0) {
+        removeItem(item);
+      } else {
+        for (var i = 0; i < previousShoppingCart.length; i++) {
+          if (previousShoppingCart[i]._id === item._id) {
+            previousShoppingCart[i].quantity = item.quantity;
+            break;
+          }
+        }
+        return previousShoppingCart;
+      }
     });
   }
-  
+
+  function removeItem(item) {
+    setShoppingCart((previousShoppingCart) => {
+      var newShoppingCart = previousShoppingCart.filter(function (i) {
+        return i._id !== item._id;
+      });
+      return newShoppingCart;
+    });
+  }
+
   function clearCart() {
     setShoppingCart((previousShoppingCart) => {
       previousShoppingCart = [];
@@ -51,15 +71,15 @@ export function CartProvider({ children }) {
       return previousShoppingCart;
     });
   }
+
   return (
     <CartContext.Provider
       value={{
+        changeQuantity,
         clearCart,
         addItem,
         removeItem,
-
         shoppingCart,
-
       }}
     >
       {children}

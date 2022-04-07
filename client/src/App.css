@@ -45,7 +45,7 @@
   background-size: cover;
 }
 
-.text-style {
+.text-style, .text-style:visited, .text-style:link {
   top: 50%;
   color: #eebc4c;
   text-align: center;
@@ -71,4 +71,18 @@ body {
 
 .align {
   align-items: center;
+}
+
+.price-align {
+  text-align: right;
+}
+.header-center {
+  text-align: center;
+}
+.header-left {
+  text-align: left;
+}
+td, th {
+  text-align: center;
+  vertical-align: middle;      
 }

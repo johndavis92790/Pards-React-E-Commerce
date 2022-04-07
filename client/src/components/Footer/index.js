@@ -50,11 +50,8 @@ function Footer({ setProductSelection }) {
           <Nav.Link as={Link} to="/cart">
             <span className="navText mx-3 text-color">Cart</span>
           </Nav.Link>
-          <Nav.Link as={Link} to="/upload">
-            <span className="navText mx-3 text-color">Upload</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/orders">
-            <span className="navText mx-3 text-color">Orders</span>
+          <Nav.Link as={Link} to="/dashboard">
+            <span className="navText mx-3 text-color">Dashboard</span>
           </Nav.Link>
         </Nav>
       </Container>

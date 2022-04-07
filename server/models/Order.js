@@ -9,6 +9,9 @@ const orderSchema = new Schema(
     status: {
       type: String,
     },
+    tracking: {
+      type: String,
+    },
     items: [],
     subtotal: {
       type: Number,

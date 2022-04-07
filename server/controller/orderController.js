@@ -17,19 +17,27 @@ const orderController = {
       res.status(500).json(error);
     }
   },
-  updateOrder: async function (req, res) {
+  shipOrder: async function (req, res) {
     try {
-      const orderData = await Order.findOneAndUpdate(req.params.orderId);
+      const orderData = await Order.findOneAndUpdate({
+        _id: req.params.orderId,
+      }, req.body);
       res.json(orderData);
     } catch (error) {
       res.status(500).json(error);
     }
   },
   createOrder: async function (req, res) {
-    req.body.orderNumber
     try {
-      console.log("req.body", req.body);
       const orderData = await Order.create(req.body);
+      res.json(orderData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+  deleteOrder: async function (req, res) {
+    try {
+      const orderData = await Order.deleteOne({ _id: req.params.orderId });
       res.json(orderData);
     } catch (error) {
       res.status(500).json(error);

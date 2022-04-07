@@ -1,6 +1,6 @@
 import "./App.css";
-import React, { useState } from "react";
-import { Route, Routes, BrowserRouter as Router, Link } from "react-router-dom";
+import React from "react";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
 //Pages
 import About from "./pages/About";
@@ -16,24 +16,12 @@ import Checkout from "./pages/Checkout";
 import UploadCSV from "./pages/UploadCSV";
 import SingleProduct from "./pages/SingleProduct";
 import Orders from "./pages/Orders";
+import Completed from "./pages/Completed";
+import Deleted from "./pages/Deleted";
+import Dashboard from "./pages/Dashboard";
 import { CartProvider } from "./components/Context/CartContext";
 
 function App() {
-  
-  // const [singleProduct, setSingleProduct] = useState();
-
-  // function selectProduct(item) {
-  //   setSingleProduct(prevItem => {
-  //     prevItem = item
-  //     console.log("prevItem", prevItem);
-  //     return prevItem;
-  //   });
-  // }
-
-  // function returnProduct() {
-  //   console.log("singleProduct", singleProduct);
-  //   return singleProduct;
-  // }
 
   return (
     <Router>
@@ -43,10 +31,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route
-            path="/product"
-            element={<Product />}
-          />
+          <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/upload" element={<UploadCSV />} />
@@ -55,6 +40,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create" element={<CreateUser />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/completed" element={<Completed />} />
+          <Route path="/deleted" element={<Deleted />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/single/:partId" element={<SingleProduct />} />
         </Routes>
         <div className="App-footer">
           <Footer></Footer>
