@@ -65,10 +65,11 @@ const Orders = () => {
     var orderId = event.target.attributes.value.value;
     try {
       const res = axios.put(`/api/order/${orderId}`, { status: `Completed` });
-      refreshPage();
+      
       console.log(res.data);
       window.alert("Order completed!");
-      this.props.history.push('/orders');
+      refreshPage();
+      // this.props.history.push('/orders');
     } catch (err) {
       console.log(err);
     }
