@@ -26,6 +26,22 @@ const CompletedOrders = () => {
     }
     fetchData();
   }, []);
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+  const deleteOrder = (event) => {
+    var orderId = event.target.attributes.value.value;
+    try {
+      const res = axios.put(`/api/order/${orderId}`, { status: `Deleted` });
+      refreshPage();
+      console.log(res.data);
+      window.alert("Order deleted!");
+      this.props.history.push("/completed");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container className="m-3">
@@ -130,6 +146,17 @@ const CompletedOrders = () => {
                           className="mx-2"
                         >
                           Email Customer
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button
+                          onClick={deleteOrder}
+                          id="deleteButton"
+                          value={order._id}
+                          variant="primary"
+                          className="mx-2"
+                        >
+                          Delete Order
                         </Button>
                       </Col>
                     </Row>

@@ -38,7 +38,7 @@ const Orders = () => {
       refreshPage();
       console.log(res.data);
       window.alert("Order deleted!");
-      window.location.href = "/orders";
+      this.props.history.push("/orders");
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +55,7 @@ const Orders = () => {
       );
       console.log(res.data);
       window.alert("Order shipped!");
-      window.location.href = "/orders";
+      this.props.history.push("/orders");
     } catch (err) {
       console.log(err);
     }
@@ -68,7 +68,7 @@ const Orders = () => {
       refreshPage();
       console.log(res.data);
       window.alert("Order completed!");
-      window.location.href = "/orders";
+      this.props.history.push('/orders');
     } catch (err) {
       console.log(err);
     }

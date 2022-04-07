@@ -15,6 +15,14 @@ const Parts = ({ parts, loading }) => {
     return <h2>Loading</h2>
   }
 
+  function mapOrRetail(product) {
+    if (product.mapPrice === "") {
+      return product.retailPrice;
+    } else {
+      return product.mapPrice;
+    }
+  }
+
   return (
     <div>
       <ul className="list-group mb-4">
@@ -43,7 +51,7 @@ const Parts = ({ parts, loading }) => {
                 <ListGroup className="list-group-flush">
                   <ListGroupItem>{part.brand}</ListGroupItem>
                   <ListGroupItem>{part.category}</ListGroupItem>
-                  <ListGroupItem>${part.retailPrice}</ListGroupItem>
+                  <ListGroupItem>${mapOrRetail(part)}</ListGroupItem>
                   <Button
                     onClick={() => {
                       cart.addItem(part);
