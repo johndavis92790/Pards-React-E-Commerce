@@ -42,6 +42,8 @@ const Product = () => {
                     <option value="1">Air Lift</option>
                     <option value="2">Curt</option>
                     <option value="3">B&W</option>
+                    <option value="3">Firestone</option>
+                    <option value="3">Bolt Locks</option>
                   </Form.Select>
                 </Col>
                 <Col sm={4}>
@@ -49,10 +51,13 @@ const Product = () => {
                     key="category"
                     aria-label="Default select example"
                   >
-                    <option>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option>Category</option>
+                    <option value="1">Suspension</option>
+                    <option value="2">Reciever Hitches</option>
+                    <option value="3">Ball Mounts</option>
+                    <option value="4">Gooseneck Hitches</option>
+                    <option value="5">Weight Distribution</option>
+                    <option value="6">Fifth Wheel Hitches</option>
                   </Form.Select>
                 </Col>
                 <Col>
@@ -68,7 +73,10 @@ const Product = () => {
               <Row>
                 <Col sm={4}>
                   <Form.Group className="mb-3" controlId="search">
-                    <Form.Control type="text" placeholder="Search Part Number" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Search Part Number"
+                    />
                   </Form.Group>
                 </Col>
                 <Col>

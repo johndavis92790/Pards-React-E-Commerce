@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Card,
@@ -29,11 +30,22 @@ const CompletedOrders = () => {
   return (
     <Container className="m-3">
       <Row>
-        <h2>Completed Orders</h2>
+        <Col>
+          <Link to={"/dashboard"}>
+            <Button variant="primary" className="m-3">
+              Back to Dashboard
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="col-sm-6 mx-auto">
+          <h2>Completed Orders</h2>
+        </Col>
       </Row>
       <Row>
         {orders.map((order, i) => {
-          if (order.status === "Deleted") {
+          if (order.status === "Completed") {
             return (
               <Card className="m-4">
                 <Card.Header>Order #{order.orderNumber}</Card.Header>

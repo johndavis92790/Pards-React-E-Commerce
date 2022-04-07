@@ -12,7 +12,6 @@ import Product from "./pages/Product";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
 import UploadCSV from "./pages/UploadCSV";
 import SingleProduct from "./pages/SingleProduct";
 import Orders from "./pages/Orders";
@@ -22,7 +21,6 @@ import Dashboard from "./pages/Dashboard";
 import { CartProvider } from "./components/Context/CartContext";
 
 function App() {
-
   return (
     <Router>
       <CartProvider>
@@ -33,7 +31,6 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="/upload" element={<UploadCSV />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

@@ -10,8 +10,6 @@ import {
   Image,
   Form,
   Button,
-  InputGroup,
-  FormControl,
   Table,
 } from "react-bootstrap";
 
@@ -40,10 +38,10 @@ const Cart = () => {
       shippingZip: form.formGridShippingZip.value,
       items: items,
       subtotal: calculateSubtotal(),
-      shipping: "25.00", 
-      tax: calculateTax(), 
-      total: calculateTotal(), 
-      status: "Open"
+      shipping: "25.00",
+      tax: calculateTax(),
+      total: calculateTotal(),
+      status: "Open",
     };
     uploadOrder(orderObj);
   };
@@ -55,15 +53,17 @@ const Cart = () => {
       body: JSON.stringify(orderObj),
     }).then((res) => {
       console.log("Upload order complete! response:", res);
+      window.alert("Order completed!");
+      window.location.href = "/";
     });
   };
 
   const calculateSubtotal = () => {
     var total = 0;
-    if (cart.shoppingCart[0]) {
-      for (let i = 0; i < cart.shoppingCart.length; i++) {
-        var retail = parseFloat(cart.shoppingCart[i].retailPrice);
-        total = total + retail;
+    if (items[0]) {
+      for (let i = 0; i < items.length; i++) {
+        var retail = parseFloat(items[i].retailPrice);
+        total = total + (retail * items[i].quantity);
       }
       return total.toFixed(2);
     } else {
@@ -72,7 +72,7 @@ const Cart = () => {
   };
 
   const calculateTax = () => {
-    if (cart.shoppingCart[0]) {
+    if (items[0]) {
       var total = 0;
       var sub = parseFloat(calculateSubtotal());
       total = sub * 0.075;
@@ -83,7 +83,7 @@ const Cart = () => {
   };
 
   const calculateTotal = () => {
-    if (cart.shoppingCart[0]) {
+    if (items[0]) {
       var sub = parseFloat(calculateSubtotal());
       var tax = parseFloat(calculateTax());
       var total = sub + tax + 25;
@@ -93,16 +93,10 @@ const Cart = () => {
     }
   };
 
+  console.log("items", items);
+
   return (
     <>
-      {/* <Button
-        onClick={() => itemsLoop(cart.shoppingCart)}
-        variant="primary"
-        type="submit"
-        to="/checkout"
-      >
-        Checkout
-      </Button> */}
       <Container fluid className="my-3">
         <Row>
           <h1>Shopping Cart</h1>
@@ -232,7 +226,7 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart.shoppingCart.map((item, i) => {
+                {items.map((item, i) => {
                   return (
                     <tr key={item._id}>
                       <td>
@@ -245,24 +239,66 @@ const Cart = () => {
                       <td>{item.brand}</td>
                       <td>{item.partNumber}</td>
                       <td className="px-0">
-                        <InputGroup size="sm" className="m-0 mx-auto">
+                        <Form
+                          onSubmit={(event) => {
+                            event.preventDefault();
+                            cart.changeQuantity(event, item);
+                          }}
+                        >
+                          <Row>
+                            <Col>
+                              <Form.Group
+                                size="sm"
+                                className="m-0 mx-auto p-0"
+                                controlId="formQuantity"
+                                style={{ width: "50px" }}
+                              >
+                                <Form.Control
+                                  className="px-1"
+                                  type="number"
+                                  defaultValue={item.quantity}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col>
+                              <Button
+                                type="submit"
+                                id="quantityButton"
+                                value={item._id}
+                                variant="light"
+                                className="mx-0 px-1"
+                              >
+                                Update
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                        {/* <InputGroup size="sm" className="m-0 mx-auto">
                           <FormControl
                             className="px-1"
                             type="number"
                             style={{ width: "18px" }}
                             defaultValue={item.quantity}
+
+                            // controlId="formQuantity"
                           />
                           <Button
                             className="px-1"
                             onClick={() => {
-                              cart.changeQuantity(item);
+                              cart.changeQuantity(this);
                             }}
+                            // onClick={() => {
+                            //   cart.changeQuantity(
+                            //     item,
+                            //     form.formQuantity.value
+                            //   );
+                            // }}
                             variant="outline-secondary"
                             id="button-addon2"
                           >
                             Update
                           </Button>
-                        </InputGroup>
+                        </InputGroup> */}
                       </td>
                       <td className="price-align">${item.retailPrice}</td>
                       <td>

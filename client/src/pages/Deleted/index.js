@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Card,
@@ -29,7 +30,18 @@ const DeletedOrders = () => {
   return (
     <Container className="m-3">
       <Row>
-        <h2>Deleted Orders</h2>
+        <Col>
+          <Link to={"/dashboard"}>
+            <Button variant="primary" className="m-3">
+              Back to Dashboard
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="col-sm-6 mx-auto">
+          <h2>Deleted Orders</h2>
+        </Col>
       </Row>
       <Row>
         {orders.map((order, i) => {
@@ -44,12 +56,7 @@ const DeletedOrders = () => {
                   <Card.Text>
                     <Row>
                       <Col sm={3}>
-                        <Table
-                          striped
-                          bordered
-                          hover
-                          size="sm"
-                        >
+                        <Table striped bordered hover size="sm">
                           <thead>
                             <tr>
                               <th>Quantity</th>

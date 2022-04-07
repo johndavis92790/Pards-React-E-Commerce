@@ -45,8 +45,6 @@ const Parts = ({ parts, loading }) => {
                   <ListGroupItem>{part.category}</ListGroupItem>
                   <ListGroupItem>${part.retailPrice}</ListGroupItem>
                   <Button
-                    as={Link}
-                    to="/cart"
                     onClick={() => {
                       cart.addItem(part);
                     }}

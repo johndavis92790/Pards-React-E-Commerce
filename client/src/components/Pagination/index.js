@@ -17,7 +17,7 @@ const Pagination = ({ partsPerPage, totalParts, paginate }) => {
               <li key={number} className="page-item">
                 <a
                   onClick={() => paginate(number)}
-                  href=""
+                  href="#"
                   className="page-link"
                 >
                   {number}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Card,
@@ -36,6 +37,8 @@ const Orders = () => {
       const res = axios.put(`/api/order/${orderId}`, { status: `Deleted` });
       refreshPage();
       console.log(res.data);
+      window.alert("Order deleted!");
+      window.location.href = "/orders";
     } catch (err) {
       console.log(err);
     }
@@ -51,6 +54,8 @@ const Orders = () => {
         trackingObj
       );
       console.log(res.data);
+      window.alert("Order shipped!");
+      window.location.href = "/orders";
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +67,8 @@ const Orders = () => {
       const res = axios.put(`/api/order/${orderId}`, { status: `Completed` });
       refreshPage();
       console.log(res.data);
+      window.alert("Order completed!");
+      window.location.href = "/orders";
     } catch (err) {
       console.log(err);
     }
@@ -86,7 +93,18 @@ const Orders = () => {
   return (
     <Container className="m-3">
       <Row>
-        <h2>Open Orders</h2>
+        <Col>
+          <Link to={"/dashboard"}>
+            <Button variant="primary" className="m-3">
+              Back to Dashboard
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="col-sm-6 mx-auto">
+          <h2>Open Orders</h2>
+        </Col>
       </Row>
       <Row>
         {orders.map((order, i) => {
@@ -103,12 +121,7 @@ const Orders = () => {
                   <Card.Text>
                     <Row>
                       <Col sm={3}>
-                        <Table
-                          striped
-                          bordered
-                          hover
-                          size="sm"
-                        >
+                        <Table striped bordered hover size="sm">
                           <thead>
                             <tr>
                               <th>Quantity</th>
