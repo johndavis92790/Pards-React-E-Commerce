@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 const CartContext = React.createContext();
 
@@ -8,6 +8,19 @@ export function useShoppingCart() {
 
 export function CartProvider({ children }) {
   const [shoppingCart, setShoppingCart] = useState([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("shoppingCart");
+
+    if (data) {
+      setShoppingCart(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("test")
+    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  }, [shoppingCart]);
 
   function addItem(item) {
     setShoppingCart((previousShoppingCart) => {
@@ -32,7 +45,7 @@ export function CartProvider({ children }) {
         } else {
           item.quantity = 1;
           previousShoppingCart.push(item);
-          return previousShoppingCart;
+          return [...previousShoppingCart];
         }
       }
     });
@@ -69,13 +82,14 @@ export function CartProvider({ children }) {
   function clearCart() {
     setShoppingCart((previousShoppingCart) => {
       previousShoppingCart = [];
-      return previousShoppingCart;
+      return [...previousShoppingCart];
     });
   }
 
   return (
     <CartContext.Provider
       value={{
+        setShoppingCart,
         changeQuantity,
         clearCart,
         addItem,

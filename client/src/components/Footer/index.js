@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/Img/logo_main.png";
 import "../../App.css";
 
-function Footer({ setProductSelection }) {
+function Footer() {
   return (
     <Navbar expand="lg">
       <Container fluid>
@@ -31,11 +31,7 @@ function Footer({ setProductSelection }) {
           <Nav.Link as={Link} to="/">
             <span className="navText mx-3 text-color">Home</span>
           </Nav.Link>
-          <Nav.Link
-            as={Link}
-            to="/product"
-            onClick={() => setProductSelection(null)}
-          >
+          <Nav.Link as={Link} to="/product">
             <span className="navText mx-3 text-color">Our Products</span>
           </Nav.Link>
           <Nav.Link as={Link} to="/about">

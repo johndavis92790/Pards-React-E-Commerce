@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
+
 import { statesArray } from "../../utils/helpers";
 import { useShoppingCart } from "../../components/Context/CartContext";
 import { Link } from "react-router-dom";
@@ -13,9 +14,11 @@ import {
   Table,
 } from "react-bootstrap";
 
-const Cart = () => {
+const Cart = ({ setShoppingCart }) => {
   const cart = useShoppingCart();
   const items = cart.shoppingCart;
+
+  
 
   const formData = (event) => {
     event.preventDefault();
@@ -63,7 +66,7 @@ const Cart = () => {
     if (items[0]) {
       for (let i = 0; i < items.length; i++) {
         var retail = parseFloat(items[i].retailPrice);
-        total = total + (retail * items[i].quantity);
+        total = total + retail * items[i].quantity;
       }
       return total.toFixed(2);
     } else {
