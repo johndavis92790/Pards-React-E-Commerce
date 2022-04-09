@@ -9,12 +9,15 @@ import {
 } from "react-bootstrap";
 import { useShoppingCart } from "../Context/CartContext";
 
+// single part card for the product page
 const Parts = ({ parts, loading }) => {
+  //get access to the shopping cart state
   const cart = useShoppingCart();
   if (loading) {
     return <h2>Loading</h2>
   }
 
+  //some parts only have retail prices and no MAP prices, this defaults to the MAP price if it exists, then returns the retail price if it doesn't exist
   function mapOrRetail(product) {
     if (product.mapPrice === "") {
       return product.retailPrice;
@@ -23,6 +26,7 @@ const Parts = ({ parts, loading }) => {
     }
   }
 
+  //returns single part bootstrap card with dynamic product info
   return (
     <div>
       <ul className="list-group mb-4">
@@ -43,7 +47,6 @@ const Parts = ({ parts, loading }) => {
                     data-part={part._id}
                   />
                 </Link>
-
                 <Card.Body>
                   <Card.Title>{part.partNumber}</Card.Title>
                   <Card.Text>{part.description}</Card.Text>

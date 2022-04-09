@@ -5,11 +5,15 @@ import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import { useShoppingCart } from "../../components/Context/CartContext";
 import { FaArrowLeft } from "react-icons/fa";
 
-const SingleProduct = (props) => {
-
+//page to display more information of a single product
+const SingleProduct = () => {
+  //useParams to get the object id from the url to find the specific product to display
   const { partId } = useParams();
 
+  //useState to keep track of which product was selected
   const [part, setPart] = useState({});
+
+  //useEffect to get the details of the product selected
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,8 +26,10 @@ const SingleProduct = (props) => {
     fetchData();
   }, [partId]);
 
+  //shopping cart variable
   const cart = useShoppingCart();
 
+  //some parts only have retail prices and no MAP prices, this defaults to the MAP price if it exists, then returns the retail price if it doesn't exist
   function mapOrRetail(product) {
     if (product.mapPrice === "") {
       return product.retailPrice;
@@ -31,6 +37,8 @@ const SingleProduct = (props) => {
       return product.mapPrice;
     }
   }
+
+  //returns dynamically created page with all the current product information
   return (
     <Container fluid="md" className="my-5">
       <Button as={Link} to="/product">
@@ -48,26 +56,38 @@ const SingleProduct = (props) => {
             <h5>Part Type: {part.descriptionTwo}</h5>
             <h5>Category: {part.category}</h5>
             <h4>Price: ${mapOrRetail(part)}</h4>
-            <Form.Select
-              className="my-4"
-              style={{ width: "110px" }}
-              aria-label="Quantity"
+
+            <Form
+              onSubmit={(event) => {
+                event.preventDefault();
+                console.log("test");
+                cart.addItem(event, part);
+              }}
             >
-              <option>Quantity</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </Form.Select>
-            <Button as={Link} to="/cart" onClick={() => cart.addItem(part)}>
-              Add to Cart
-            </Button>
+              <Row>
+                <Col>
+                  <Form.Group
+                    size="sm"
+                    className="m-0"
+                    controlId="formQuantity"
+                    style={{ width: "80px" }}
+                  >
+                    <Form.Control type="number" defaultValue={1} />
+                    <Button
+                      as={Link}
+                      to="/cart"
+                      type="submit"
+                      id="quantityButton"
+                      value={part._id}
+                      variant="success"
+                      className="mt-2"
+                    >
+                      Add to Cart
+                    </Button>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Form>
           </div>
         </Col>
       </Row>

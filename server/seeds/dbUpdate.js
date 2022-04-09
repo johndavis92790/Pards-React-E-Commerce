@@ -1,10 +1,10 @@
 var MongoClient = require("mongodb").MongoClient;
 const csvUpload = require("./csvUpload");
 
+//connects to the mongo database and drops the entire collection
 module.exports = function dbUpdate(req, res) {
   console.log("req1", req.body);
-  const dbURL =
-    "mongodb+srv://johndavis92790:$p1d3rMan@cluster0.8kqia.mongodb.net/pardsDB?retryWrites=true&w=majority";
+  const dbURL = process.env.MONGODB_URI;
 
   MongoClient.connect(dbURL, function (err, dbDrop) {
     if (err) throw err;

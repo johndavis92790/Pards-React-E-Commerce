@@ -1,5 +1,6 @@
 const { Part } = require("../models");
 
+//controller to get all the parts or just one, the deletion happens when the prodcuts are uploaded
 const partController = {
   getParts: async function (req, res) {
     try {

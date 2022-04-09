@@ -11,9 +11,12 @@ import {
   Form,
 } from "react-bootstrap";
 
+//page to see completed orders placed on the website
 const CompletedOrders = () => {
+  //useState to keep track of the open orders array
   const [orders, setOrders] = useState([]);
 
+  //useEffect to get the orders from the database
   useEffect(() => {
     async function fetchData() {
       try {
@@ -26,10 +29,13 @@ const CompletedOrders = () => {
     }
     fetchData();
   }, []);
+
+  //function to refresh page when updated order details
   function refreshPage() {
     window.location.reload(false);
   }
 
+  //marks order as deleted, does not actually delete order, it never deletes any orders so you can always go back to reference it
   const deleteOrder = (event) => {
     var orderId = event.target.attributes.value.value;
     try {
@@ -43,6 +49,7 @@ const CompletedOrders = () => {
     }
   };
 
+  //returns the orders as full width cards with all of the order details like the products and the customer information
   return (
     <Container className="m-3">
       <Row>

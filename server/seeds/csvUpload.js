@@ -1,18 +1,26 @@
 const db = require("../config/connection");
 
+//function to parse data from csv files, then upload the data to the mongo database
 module.exports = function csvUpload(req, res) {
+  // parses the json data
   var parsed = JSON.parse(JSON.stringify(req.body));
+  //creates array of objects
   var arrayParts = Object.values(parsed);
+  //connects to mongo collection
   var collection = db.collection("parts");
 
+  //function to calculate the price in cents for the stripe server
   function priceToCents(price) {
     var dollars = parseFloat(price);
     var cents = dollars * 100;
     return cents;
   }
 
-  // TODO: this code could be cleaner (use forEach or a for loop)
-  arrayParts.map((part, i) => {
+  //map function to map over each product and upload it to the mongo database one at a time,
+  //I did try to do a collection.insertmany to insert them all at the same time but ran into 
+  //issues and ran out of time and since this worked, I just kept it, I am sure that this 
+  //can be fixed and made much more efficient
+  arrayParts.map((part) => {
     var oneRow = {
       partNumber: part["Part Number"],
       brand: part["Brand Label"],

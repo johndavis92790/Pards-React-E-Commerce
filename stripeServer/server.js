@@ -1,3 +1,6 @@
+//basic stripe server setup to be able to charge credit cards, 
+//ran out of time to get it fully setup so this is incomplete
+
 require('dotenv').config();
 const axios = require("axios");
 

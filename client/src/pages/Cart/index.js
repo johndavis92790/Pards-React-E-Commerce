@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from "react";
-
+import React from "react";
 import { statesArray } from "../../utils/helpers";
 import { useShoppingCart } from "../../components/Context/CartContext";
 import { Link } from "react-router-dom";
@@ -14,12 +13,14 @@ import {
   Table,
 } from "react-bootstrap";
 
-const Cart = ({ setShoppingCart }) => {
+//shopping cart page
+const Cart = () => {
+  //uses shopping cart state
   const cart = useShoppingCart();
+  //shopping cart variable
   const items = cart.shoppingCart;
 
-  
-
+  //pulls form data from page into an object, inserts the shopping cart array and calculates totals and tax and sets status to open when the user places the order
   const formData = (event) => {
     event.preventDefault();
     var form = event.target;
@@ -49,6 +50,16 @@ const Cart = ({ setShoppingCart }) => {
     uploadOrder(orderObj);
   };
 
+  //some parts only have retail prices and no MAP prices, this defaults to the MAP price if it exists, then returns the retail price if it doesn't exist
+  function mapOrRetail(product) {
+    if (product.mapPrice === "") {
+      return product.retailPrice;
+    } else {
+      return product.mapPrice;
+    }
+  }
+
+  //uploads placed order to backend
   const uploadOrder = (orderObj) => {
     fetch("/api/order", {
       method: "POST",
@@ -61,11 +72,12 @@ const Cart = ({ setShoppingCart }) => {
     });
   };
 
+  //calculates the subtotal of all the items together before tax and shipping
   const calculateSubtotal = () => {
     var total = 0;
     if (items[0]) {
       for (let i = 0; i < items.length; i++) {
-        var retail = parseFloat(items[i].retailPrice);
+        var retail = parseFloat(mapOrRetail(items[i]));
         total = total + retail * items[i].quantity;
       }
       return total.toFixed(2);
@@ -74,6 +86,7 @@ const Cart = ({ setShoppingCart }) => {
     }
   };
 
+  //caculates Salt Lake County sales tax
   const calculateTax = () => {
     if (items[0]) {
       var total = 0;
@@ -85,6 +98,7 @@ const Cart = ({ setShoppingCart }) => {
     }
   };
 
+  //caluclates order total after items, tax and shipping
   const calculateTotal = () => {
     if (items[0]) {
       var sub = parseFloat(calculateSubtotal());
@@ -96,8 +110,7 @@ const Cart = ({ setShoppingCart }) => {
     }
   };
 
-  console.log("items", items);
-
+  //returns shopping cart page complete with customer information form and shopping cart list and totals
   return (
     <>
       <Container fluid className="my-3">
@@ -118,12 +131,10 @@ const Cart = ({ setShoppingCart }) => {
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control type="text" placeholder="Last Name" />
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />
                 </Form.Group>
-
                 <Form.Group
                   className="mb-3"
                   controlId="formGridBillingAddress1"
@@ -131,7 +142,6 @@ const Cart = ({ setShoppingCart }) => {
                   <Form.Label>Billing Address</Form.Label>
                   <Form.Control placeholder="1234 Main St" />
                 </Form.Group>
-
                 <Form.Group
                   className="mb-3"
                   controlId="formGridBillingAddress2"
@@ -139,12 +149,10 @@ const Cart = ({ setShoppingCart }) => {
                   <Form.Label>Address 2</Form.Label>
                   <Form.Control placeholder="Apartment, studio, or floor" />
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridBillingCity">
                   <Form.Label>City</Form.Label>
                   <Form.Control />
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridBillingState">
                   <Form.Label>State</Form.Label>
                   <Form.Select defaultValue="Choose...">
@@ -154,7 +162,6 @@ const Cart = ({ setShoppingCart }) => {
                     ))}
                   </Form.Select>
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridBillingZip">
                   <Form.Label>Zip</Form.Label>
                   <Form.Control />
@@ -175,7 +182,6 @@ const Cart = ({ setShoppingCart }) => {
                   <Form.Label>Shipping Address</Form.Label>
                   <Form.Control placeholder="1234 Main St" />
                 </Form.Group>
-
                 <Form.Group
                   className="mb-3"
                   controlId="formGridShippingAddress2"
@@ -183,12 +189,10 @@ const Cart = ({ setShoppingCart }) => {
                   <Form.Label>Address 2</Form.Label>
                   <Form.Control placeholder="Apartment, studio, or floor" />
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridShippingCity">
                   <Form.Label>City</Form.Label>
                   <Form.Control />
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridShippingState">
                   <Form.Label>State</Form.Label>
                   <Form.Select defaultValue="Choose...">
@@ -198,17 +202,18 @@ const Cart = ({ setShoppingCart }) => {
                     ))}
                   </Form.Select>
                 </Form.Group>
-
                 <Form.Group as={Col} controlId="formGridShippingZip">
                   <Form.Label>Zip</Form.Label>
                   <Form.Control />
                 </Form.Group>
-
                 <Button
+                  onClick={() => {
+                    cart.clearCart();
+                  }}
                   className="mt-3"
                   variant="primary"
                   type="submit"
-                  // to="/checkout"
+                  to="/"
                 >
                   Checkout
                 </Button>
@@ -276,32 +281,6 @@ const Cart = ({ setShoppingCart }) => {
                             </Col>
                           </Row>
                         </Form>
-                        {/* <InputGroup size="sm" className="m-0 mx-auto">
-                          <FormControl
-                            className="px-1"
-                            type="number"
-                            style={{ width: "18px" }}
-                            defaultValue={item.quantity}
-
-                            // controlId="formQuantity"
-                          />
-                          <Button
-                            className="px-1"
-                            onClick={() => {
-                              cart.changeQuantity(this);
-                            }}
-                            // onClick={() => {
-                            //   cart.changeQuantity(
-                            //     item,
-                            //     form.formQuantity.value
-                            //   );
-                            // }}
-                            variant="outline-secondary"
-                            id="button-addon2"
-                          >
-                            Update
-                          </Button>
-                        </InputGroup> */}
                       </td>
                       <td className="price-align">${item.retailPrice}</td>
                       <td>

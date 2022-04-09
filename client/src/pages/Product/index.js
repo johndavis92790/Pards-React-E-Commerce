@@ -4,12 +4,15 @@ import Pagination from "../../components/Pagination";
 import axios from "axios";
 import { Container, Row, Button, Form, Col } from "react-bootstrap";
 
+//product page for users to see available products and to browse and shop for them
 const Product = () => {
+  //useStates for the parts array, loading status for pagination, parts per page for pagination and the current page for pagination
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [partsPerPage] = useState(10);
 
+  //useEffect to get all the products from the database
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,12 +26,14 @@ const Product = () => {
     fetchData();
   }, []);
 
+  //pagination variables
   const indexOfLastPart = currentPage * partsPerPage;
   const indexOfFirstPart = indexOfLastPart - partsPerPage;
   const currentParts = parts.slice(indexOfFirstPart, indexOfLastPart);
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  //returns searching and filtering options(which do not work currently) at the top of the page and the 
+  //pagination buttons at the bottom of the page with all the product cards in the middle
   return (
     <>
       <Container fluid className="m-3">

@@ -85,6 +85,7 @@ db.once("open", () => {
   });
 });
 
+//post route for uploading product data
 app.post("/upload", (req, res) => {
   dbUpdate(req, res);
 });

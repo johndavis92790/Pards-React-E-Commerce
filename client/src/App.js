@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
-//Pages
+//Pages and components
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
@@ -20,6 +20,7 @@ import Deleted from "./pages/Deleted";
 import Dashboard from "./pages/Dashboard";
 import { CartProvider } from "./components/Context/CartContext";
 
+//React App with react router for navigation and the shopping cart context provider
 function App() {
   return (
     <Router>

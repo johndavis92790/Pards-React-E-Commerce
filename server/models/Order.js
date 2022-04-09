@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 let counter = 1;
 let CountedId = { type: Number, default: () => counter++ };
 
+//order schema
 const orderSchema = new Schema(
   {
     orderNumber: CountedId,

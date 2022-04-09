@@ -1,5 +1,6 @@
 const { Schema, Types, model } = require("mongoose");
 
+//part schema
 const partSchema = new Schema(
   {
     partNumber: {

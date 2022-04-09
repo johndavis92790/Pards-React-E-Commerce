@@ -1,5 +1,6 @@
 const { Order } = require("../models");
 
+//controllers to create, delete and modify orders
 const orderController = {
   getOrders: async function (req, res) {
     try {

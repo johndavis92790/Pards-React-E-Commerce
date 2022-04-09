@@ -1,5 +1,6 @@
 const { User } = require("../models");
 
+//controllers to create, delete and get a user for the owners backend
 const userController = {
   getUsers: async function (req, res) {
     try {

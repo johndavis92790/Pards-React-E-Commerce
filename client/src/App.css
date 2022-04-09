@@ -86,3 +86,8 @@ td, th {
   text-align: center;
   vertical-align: middle;      
 }
+
+.App-footer footer a, .App-footer footer a:hover, .App-footer footer a:visited {
+  text-decoration: none;
+  color: #eebc4c;
+}

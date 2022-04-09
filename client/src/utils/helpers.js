@@ -2,12 +2,14 @@ export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   
+//validates emails for forms
 export function validateEmail(email) {
   var re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 
+//50 states array for address forms
 export const statesArray = {
   states: [
   "Alabama",
@@ -71,6 +73,7 @@ export const statesArray = {
   "Wyoming",
 ]};
   
+//shuffle array for product page, hasn't been implemented yet
 export function shuffle(array) {
   let currentIndex = array.length,
     randomIndex;

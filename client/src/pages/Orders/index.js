@@ -11,9 +11,13 @@ import {
   Form,
 } from "react-bootstrap";
 
+//page to see current and open orders placed on the website
 const Orders = () => {
+
+  //useState to keep track of the open orders array
   const [orders, setOrders] = useState([]);
 
+  //useEffect to get the orders from the database
   useEffect(() => {
     async function fetchData() {
       try {
@@ -27,10 +31,12 @@ const Orders = () => {
     fetchData();
   }, []);
 
+  //function to refresh page when updated order details
   function refreshPage() {
     window.location.reload(false);
   }
 
+  //marks order as deleted, does not actually delete order, it never deletes any orders so you can always go back to reference it
   const deleteOrder = (event) => {
     var orderId = event.target.attributes.value.value;
     try {
@@ -38,15 +44,15 @@ const Orders = () => {
       refreshPage();
       console.log(res.data);
       window.alert("Order deleted!");
-      this.props.history.push("/orders");
+      refreshPage();
     } catch (err) {
       console.log(err);
     }
   }
 
+  //marks the order as shipped and adds tracking number to object
   const shipOrder = (event) => {
     var form = event.target;
-    
     var trackingObj = { status: `Shipped`, tracking: form.formTracking.value };
     try {
       const res = axios.put(
@@ -55,26 +61,26 @@ const Orders = () => {
       );
       console.log(res.data);
       window.alert("Order shipped!");
-      this.props.history.push("/orders");
+      refreshPage();
     } catch (err) {
       console.log(err);
     }
   }
 
+  //marks the order as complete
   const completeOrder = (event) => {
     var orderId = event.target.attributes.value.value;
     try {
       const res = axios.put(`/api/order/${orderId}`, { status: `Completed` });
-      
       console.log(res.data);
       window.alert("Order completed!");
       refreshPage();
-      // this.props.history.push('/orders');
     } catch (err) {
       console.log(err);
     }
   };
 
+  //displays item title background color depending on it the order has been shipped or not
   function statusColor(order) {
     if (order.status === "Open") {
       return (
@@ -91,6 +97,7 @@ const Orders = () => {
     }
   }
 
+  //returns the orders as full width cards with all of the order details like the products and the customer information
   return (
     <Container className="m-3">
       <Row>

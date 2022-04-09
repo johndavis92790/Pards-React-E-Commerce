@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
+//backend dashboard for owners to login and see open and completed orders and to upload updated product information
 function Dashboard() {
   return (
     <>

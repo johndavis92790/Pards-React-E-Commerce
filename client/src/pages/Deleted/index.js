@@ -11,9 +11,12 @@ import {
   Form,
 } from "react-bootstrap";
 
+//page to see deleted orders placed on the website
 const DeletedOrders = () => {
+  //useState to keep track of the open orders array
   const [orders, setOrders] = useState([]);
 
+  //useEffect to get the orders from the database
   useEffect(() => {
     async function fetchData() {
       try {
@@ -27,6 +30,8 @@ const DeletedOrders = () => {
     fetchData();
   }, []);
 
+  //returns the orders as full width cards with all of the order details like the products and the customer information.
+  //no functionality with this page, only for referencing
   return (
     <Container className="m-3">
       <Row>

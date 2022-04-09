@@ -1,13 +1,17 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 
+//pagination for the product page
 const Pagination = ({ partsPerPage, totalParts, paginate }) => {
-  const pageNumbers = [];
 
+  //starts with and empty array
+  const pageNumbers = [];
+  //calculates number of pages of parts
   for (let i = 1; i <= Math.ceil(totalParts / partsPerPage); i++) {
     pageNumbers.push(i);
   }
 
+  //retuns page number buttons at bottom of page
   return (
     <Row>
       <Col>
