@@ -15,3 +15,8 @@ code {
 .icons, .icons:visited {
   color: red;
 }
+
+.right-align {
+  text-align: right;
+}
+

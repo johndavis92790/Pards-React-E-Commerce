@@ -9,8 +9,7 @@ import "../../App.css";
 // I can't figure out why your header isn't updating when you click the add product button. Maybe
 // removing the circular dependency will help?
 
-function Navigation({ setProductSelection }) {
-
+function Navigation() {
   return (
     <Navbar expand="lg">
       <Container fluid>
@@ -25,21 +24,14 @@ function Navigation({ setProductSelection }) {
             <Nav.Link as={Link} to="/">
               <span className="navText mx-3 text-color">Home</span>
             </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/product"
-              onClick={() => setProductSelection(null)}
-            >
-              <span className="navText mx-3 text-color">Our Products</span>
-            </Nav.Link>
             <Nav.Link as={Link} to="/about">
               <span className="navText mx-3 text-color">Who We Are</span>
             </Nav.Link>
+            <Nav.Link as={Link} to="/product">
+              <span className="navText mx-3 text-color">Our Products</span>
+            </Nav.Link>
             <Nav.Link as={Link} to="/contact">
               <span className="navText mx-3 text-color">Contact Us!</span>
-            </Nav.Link>
-            <Nav.Link as={Link} to="/single">
-              <span className="navText mx-3 text-color">Single Part</span>
             </Nav.Link>
             <Nav.Link as={Link} to="/cart">
               <span className="navText mx-3 text-color">Cart</span>

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
+
 import { statesArray } from "../../utils/helpers";
-import { useShoppingCart } from "../../components/CartContext";
+import { useShoppingCart } from "../../components/Context/CartContext";
+import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import {
   Container,
@@ -9,16 +11,19 @@ import {
   Image,
   Form,
   Button,
-  ListGroup,
+  Table,
 } from "react-bootstrap";
 
-const Cart = () => {
+const Cart = ({ setShoppingCart }) => {
   const cart = useShoppingCart();
+  const items = cart.shoppingCart;
+
+  
 
   const formData = (event) => {
     event.preventDefault();
     var form = event.target;
-    var customerObj = {
+    var orderObj = {
       billingFirstName: form.formGridBillingFName.value,
       billingLastName: form.formGridBillingLName.value,
       billingEmail: form.formGridEmail.value,
@@ -27,7 +32,6 @@ const Cart = () => {
       billingCity: form.formGridBillingCity.value,
       billingState: form.formGridBillingState.value,
       billingZip: form.formGridBillingZip.value,
-      // shippingAddressCheckbox: form.formGridCheckbox.checked,
       shippingFirstName: form.formGridShippingFName.value,
       shippingLastName: form.formGridShippingLName.value,
       shippingAddress1: form.formGridShippingAddress1.value,
@@ -35,175 +39,329 @@ const Cart = () => {
       shippingCity: form.formGridShippingCity.value,
       shippingState: form.formGridShippingState.value,
       shippingZip: form.formGridShippingZip.value,
-      // standardShipCheckbox: form.standardShipCheckbox.checked,
-      // expeditedShipCheckbox: form.expeditedShipCheckbox.checked,
+      items: items,
+      subtotal: calculateSubtotal(),
+      shipping: "25.00",
+      tax: calculateTax(),
+      total: calculateTotal(),
+      status: "Open",
     };
-    cart.addCustomerInfo(customerObj);
-    console.log("shoppingCart", cart.shoppingCart);
+    uploadOrder(orderObj);
   };
 
-  function itemsLoop(items) {
-    console.log("shoppingCart", cart.shoppingCart);
+  const uploadOrder = (orderObj) => {
+    fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderObj),
+    }).then((res) => {
+      console.log("Upload order complete! response:", res);
+      window.alert("Order completed!");
+      window.location.href = "/";
+    });
+  };
 
-    for (const property in items) {
-      console.log(`${property}: ${items[property]}`);
-      return (
-        <ListGroup.Item>
-          <Image
-            fluid
-            style={{ height: "50px" }}
-            src={items[property].part.photo}
-            alt={items[property].part.partNumber}
-            key={items[property]}
-          />
-          {items[property].part.partNumber} x {items[property].quantity}
-          <FaTrash
-            style={{ cursor: "pointer" }}
-            onClick={cart.removeItem(items[property].part)}
-            className="icons"
-          />
-        </ListGroup.Item>
-      );
+  const calculateSubtotal = () => {
+    var total = 0;
+    if (items[0]) {
+      for (let i = 0; i < items.length; i++) {
+        var retail = parseFloat(items[i].retailPrice);
+        total = total + retail * items[i].quantity;
+      }
+      return total.toFixed(2);
+    } else {
+      return "0.00";
     }
+  };
 
-    //   // {
-    //   //   _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   },
-    //   //    _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   },
-    //   //    _id: {
-    //   //     part: {...},
-    //   //     quantity: 1
-    //   //   }
-    //   // }
+  const calculateTax = () => {
+    if (items[0]) {
+      var total = 0;
+      var sub = parseFloat(calculateSubtotal());
+      total = sub * 0.075;
+      return total.toFixed(2);
+    } else {
+      return "0.00";
+    }
+  };
 
-    //   for (let item in shoppingCart) {
-    //     console.log("item", item);
+  const calculateTotal = () => {
+    if (items[0]) {
+      var sub = parseFloat(calculateSubtotal());
+      var tax = parseFloat(calculateTax());
+      var total = sub + tax + 25;
+      return total.toFixed(2);
+    } else {
+      return "0.00";
+    }
+  };
 
-    //
-    //   }
-  }
+  console.log("items", items);
 
   return (
     <>
-      {/* <Button
-        onClick={() => itemsLoop(cart.shoppingCart)}
-        variant="primary"
-        type="submit"
-        to="/checkout"
-      >
-        Checkout
-      </Button> */}
-      <Container fluid="md" className="my-5">
-        <Row className="align-items-center">
-          <Col sm={7} className="p-5">
-            <h1>Shopping Cart</h1>
-            <Form onSubmit={formData}>
-              <Form.Group as={Col} controlId="formGridBillingFName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="First Name" />
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridBillingLName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Last Name" />
-              </Form.Group>
+      <Container fluid className="my-3">
+        <Row>
+          <h1>Shopping Cart</h1>
+        </Row>
+        <Row>
+          <Col sm={6} className="my-5 px-2">
+            <Col sm={7} className="mx-auto">
+              <h3 className="pb-3">Customer Details</h3>
+              <Form onSubmit={formData}>
+                <h5>Billing Address</h5>
+                <Form.Group as={Col} controlId="formGridBillingFName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="text" placeholder="First Name" />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridBillingLName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control type="text" placeholder="Last Name" />
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" />
+                </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formGridBillingAddress1">
-                <Form.Label>Billing Address</Form.Label>
-                <Form.Control placeholder="1234 Main St" />
-              </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formGridBillingAddress1"
+                >
+                  <Form.Label>Billing Address</Form.Label>
+                  <Form.Control placeholder="1234 Main St" />
+                </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formGridBillingAddress2">
-                <Form.Label>Address 2</Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" />
-              </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formGridBillingAddress2"
+                >
+                  <Form.Label>Address 2</Form.Label>
+                  <Form.Control placeholder="Apartment, studio, or floor" />
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridBillingCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control />
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridBillingCity">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control />
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridBillingState">
-                <Form.Label>State</Form.Label>
-                <Form.Select defaultValue="Choose...">
-                  <option>Choose</option>
-                  {statesArray.states.map((i) => (
-                    <option>{i}</option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridBillingState">
+                  <Form.Label>State</Form.Label>
+                  <Form.Select defaultValue="Choose...">
+                    <option>Choose</option>
+                    {statesArray.states.map((i) => (
+                      <option>{i}</option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridBillingZip">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control />
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridBillingZip">
+                  <Form.Label>Zip</Form.Label>
+                  <Form.Control />
+                </Form.Group>
+                <h5 className="mt-5">Shipping Address</h5>
+                <Form.Group as={Col} controlId="formGridShippingFName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="text" placeholder="First Name" />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridShippingLName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control type="text" placeholder="Last Name" />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formGridShippingAddress1"
+                >
+                  <Form.Label>Shipping Address</Form.Label>
+                  <Form.Control placeholder="1234 Main St" />
+                </Form.Group>
 
-              <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  label="Use a different shipping address"
-                />
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridShippingFName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="First Name" />
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridShippingLName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Last Name" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formGridShippingAddress1">
-                <Form.Label>Shipping Address</Form.Label>
-                <Form.Control placeholder="1234 Main St" />
-              </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formGridShippingAddress2"
+                >
+                  <Form.Label>Address 2</Form.Label>
+                  <Form.Control placeholder="Apartment, studio, or floor" />
+                </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formGridShippingAddress2">
-                <Form.Label>Address 2</Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" />
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridShippingCity">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control />
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridShippingCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control />
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridShippingState">
+                  <Form.Label>State</Form.Label>
+                  <Form.Select defaultValue="Choose...">
+                    <option>Choose</option>
+                    {statesArray.states.map((i) => (
+                      <option>{i}</option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridShippingState">
-                <Form.Label>State</Form.Label>
-                <Form.Select defaultValue="Choose...">
-                  <option>Choose</option>
-                  {statesArray.states.map((i) => (
-                    <option>{i}</option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
+                <Form.Group as={Col} controlId="formGridShippingZip">
+                  <Form.Label>Zip</Form.Label>
+                  <Form.Control />
+                </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridShippingZip">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="standardShipCheckbox">
-                <Form.Check type="checkbox" label="Standard Shipping $25" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="expeditedShipCheckbox">
-                <Form.Check type="checkbox" label="Expedited Shipping $50" />
-              </Form.Group>
-              <Button variant="primary" type="submit" to="/checkout">
-                Checkout
-              </Button>
-            </Form>
+                <Button
+                  className="mt-3"
+                  variant="primary"
+                  type="submit"
+                  // to="/checkout"
+                >
+                  Checkout
+                </Button>
+              </Form>
+            </Col>
           </Col>
-          <Col sm={5}>
-            <h3>Order Summary</h3>
-            <ListGroup>{itemsLoop(cart.shoppingCart)}</ListGroup>
+          <Col sm={6} md={5} className="align-self-start my-5 px-2">
+            <h3 className="pb-3">Order Summary</h3>
+            <Table borderless hover size="sm">
+              <thead>
+                <tr>
+                  <th style={{ width: "100px" }}> </th>
+                  <th className="header-center px-2">Brand</th>
+                  <th className="header-center">Part #</th>
+                  <th className="header-left px-0">Qty</th>
+                  <th className="price-align">Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item, i) => {
+                  return (
+                    <tr key={item._id}>
+                      <td>
+                        <Image
+                          style={{ height: "45px" }}
+                          src={item.photo}
+                          alt={item.partNumber}
+                        />
+                      </td>
+                      <td>{item.brand}</td>
+                      <td>{item.partNumber}</td>
+                      <td className="px-0">
+                        <Form
+                          onSubmit={(event) => {
+                            event.preventDefault();
+                            cart.changeQuantity(event, item);
+                          }}
+                        >
+                          <Row>
+                            <Col>
+                              <Form.Group
+                                size="sm"
+                                className="m-0 mx-auto p-0"
+                                controlId="formQuantity"
+                                style={{ width: "50px" }}
+                              >
+                                <Form.Control
+                                  className="px-1"
+                                  type="number"
+                                  defaultValue={item.quantity}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col>
+                              <Button
+                                type="submit"
+                                id="quantityButton"
+                                value={item._id}
+                                variant="light"
+                                className="mx-0 px-1"
+                              >
+                                Update
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                        {/* <InputGroup size="sm" className="m-0 mx-auto">
+                          <FormControl
+                            className="px-1"
+                            type="number"
+                            style={{ width: "18px" }}
+                            defaultValue={item.quantity}
+
+                            // controlId="formQuantity"
+                          />
+                          <Button
+                            className="px-1"
+                            onClick={() => {
+                              cart.changeQuantity(this);
+                            }}
+                            // onClick={() => {
+                            //   cart.changeQuantity(
+                            //     item,
+                            //     form.formQuantity.value
+                            //   );
+                            // }}
+                            variant="outline-secondary"
+                            id="button-addon2"
+                          >
+                            Update
+                          </Button>
+                        </InputGroup> */}
+                      </td>
+                      <td className="price-align">${item.retailPrice}</td>
+                      <td>
+                        <Button
+                          as={Link}
+                          to="/cart"
+                          className="p-0"
+                          onClick={() => {
+                            cart.removeItem(item);
+                          }}
+                          variant="light"
+                        >
+                          <FaTrash
+                            style={{ cursor: "pointer" }}
+                            className="icons p-0"
+                          />
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Subtotal</th>
+                  <th className="price-align">${calculateSubtotal()}</th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Shipping</th>
+                  <th className="price-align">$25.00</th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Tax</th>
+                  <th className="price-align">${calculateTax()}</th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Total</th>
+                  <th className="price-align">${calculateTotal()}</th>
+                </tr>
+              </tbody>
+            </Table>
+            <Button
+              onClick={() => {
+                cart.clearCart();
+              }}
+              variant="outline-danger"
+              className="float-end"
+            >
+              Empty Shopping Cart
+            </Button>
           </Col>
         </Row>
       </Container>

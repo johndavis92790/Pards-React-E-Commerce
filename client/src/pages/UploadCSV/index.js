@@ -35,18 +35,20 @@ function UploadCSV() {
       body: csvString,
     }).then((res) => {
       console.log("Request complete! response:", res);
+      window.alert("Items uploaded!");
+      window.location.href = "/dashboard";
     });
   }
 
   return (
-    <div className="uploadPage">
+    <div className="uploadPage my-5">
       <h1>Express File Upload</h1>
       <ReactFileReader
         multipleFiles={true}
         handleFiles={readAllFiles}
         fileTypes={".csv"}
       >
-        <button className="btn">Upload</button>
+        <button className="btn btn-success my-3">Upload</button>
       </ReactFileReader>
     </div>
   );
