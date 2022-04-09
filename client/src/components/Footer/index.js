@@ -8,12 +8,14 @@ function Footer() {
   return (
     <Navbar expand="lg">
       <Container fluid>
+        {/* Logo/Link to home page */}
         <Navbar.Brand as={Link} to="/">
           <span className="navText mx-3 text-color">
             <Image src={logo} alt="Logo" height={150} />
           </span>
         </Navbar.Brand>
         <Nav className="me-auto align">
+          {/* Text for Company Location, Address, Hours, and phone number */}
           <Navbar.Text className="text-center text-color">
             <a href="https://www.google.com/maps/place/5910+300+W,+Murray,+UT+84107">
               5910 S 300 W
@@ -28,6 +30,7 @@ function Footer() {
               Open Monday - Friday 8:30 am to 5:00 pm
             </p>
           </Navbar.Text>
+          {/*All Navigation links below*/}
           <Nav.Link as={Link} to="/">
             <span className="navText mx-3 text-color">Home</span>
           </Nav.Link>

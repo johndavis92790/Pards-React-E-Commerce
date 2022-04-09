@@ -5,6 +5,7 @@ function Header() {
 
   return (
     <header>
+      {/* All Navigation on ../Nav folder */}
       <Navigation
       ></Navigation>
     </header>

@@ -1,7 +1,10 @@
+// All React necessary items for this page
 import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React from "react";
+// Main logo
 import logo from "../../assets/Img/logo_main.png";
+// CSS here
 import "../../App.css";
 
 // TODO: you probably want to move the CartContext to a separate file since
@@ -13,13 +16,16 @@ function Navigation() {
   return (
     <Navbar expand="lg">
       <Container fluid>
+        {/* Logo/Link to home page */}
         <Navbar.Brand as={Link} to="/">
           <span className="navText mx-3 text-color">
             <Image src={logo} alt="Logo" height={100} />
           </span>
         </Navbar.Brand>
+        {/* Mobile ability to access Navbar */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+          {/* All page links below */}
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">
               <span className="navText mx-3 text-color">Home</span>
