@@ -2,7 +2,7 @@
 
 A React-based website for a great local business!
 
-![Home-Page](./client\src\assets\Img\Home-page-SS.png "home-page")
+![Home-Page](.\client\src\assets\Img\Home-page-SS.png "home-page")
 
 # Let Pard's help you to build the traveling rig of your dreams!
 
@@ -20,7 +20,11 @@ Start by logging in! Don't have an account? Sign up now!
 ## Check out the 'about us' page for a quick history of pard's and their values.
 Check the 'Who-we-are" page to get to know us better!
 
+<<<<<<< HEAD
 ![About-Us](.\client\src\assets\Img\About-page-SS.png "who-we-are")
+=======
+![About-Us](../../assets/Img/about.png)
+>>>>>>> 0459640e7c147440d9f607b2de023e28a198b343
 
 ## Use the address link to find the best directions to the warehouse.
 
@@ -32,6 +36,6 @@ Use the address link on the home-page to find the best directions to the warehou
 
 ## Look through the products page to find the parts for your dream rig!
 
-![Products-Page](.\client\src\assets\Img\Products-page-SS.png "products page")
+![Products-Page](.\client\src\assets\Img\Products-page-SS.png)
 
 ##
