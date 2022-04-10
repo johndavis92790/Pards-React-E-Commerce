@@ -20,7 +20,7 @@ Start by logging in! Don't have an account? Sign up now!
 ## Check out the 'about us' page for a quick history of pard's and their values.
 Check the 'Who-we-are" page to get to know us better!
 
-![About-Us](.\client\src\assets\Img\About-page-SS.png "who-we-are")
+![About-Us](../../assets/Img/about.png)
 
 ## Use the address link to find the best directions to the warehouse.
 Use the address link on the home-page to find the best directions to the warehouse!
