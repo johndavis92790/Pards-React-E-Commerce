@@ -2,7 +2,7 @@
 
 A React-based website for a great local business!
 
-![Home-Page](".\client\src\assets\Img\Home-page-SS.png")
+![Home-Page](.\client\src\assets\Img\Home-page-SS.png)
 
 # Let Pard's help you to build the traveling rig of your dreams!
 
