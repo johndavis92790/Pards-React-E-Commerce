@@ -17,18 +17,13 @@ Start by logging in! Don't have an account? Sign up now!
 
 ![Login-page](.\client\src\assets\Img\Login-page-SS.png "login-page") 
 
-## Check out the 'about us' page for a quick history of pard's and their values.
-Check the 'Who-we-are" page to get to know us better!
+## Check the 'Who-we-are" page to get to know us better!
 
-<<<<<<< HEAD
+
 ![About-Us](.\client\src\assets\Img\About-page-SS.png "who-we-are")
-=======
-![About-Us](../../assets/Img/about.png)
->>>>>>> 0459640e7c147440d9f607b2de023e28a198b343
 
 ## Use the address link to find the best directions to the warehouse.
 
-Use the address link on the home-page to find the best directions to the warehouse!
 
 ![products-page](.\client\src\assets\Img\Google-directions-SS.png)
 
@@ -38,4 +33,21 @@ Use the address link on the home-page to find the best directions to the warehou
 
 ![Products-Page](.\client\src\assets\Img\Products-page-SS.png)
 
-##
+
+## Once you've added you're items to the cart, head to checkout!
+
+![Payment-page](client\src\assets\Img\Cart-page-SS.png)
+
+
+## Make sure to fill out the contact form if you have any questions!
+
+![contact-page](client\src\assets\Img\Contact-page-SS.png)
+
+## Manage your inventory, order status, and manage your order history on the dashboard!
+
+![Dashboard](client\src\assets\Img\Dashboard-page-SS.png)
+
+
+## Built by
+
+John Davis, Braxton Hotton, Daniel Jardine, and Aaron Humelsine

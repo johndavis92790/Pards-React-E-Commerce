@@ -85,7 +85,7 @@ function Contact() {
               <Form.Control
                 type="text"
                 as="textarea"
-                placeholder="Name"
+                placeholder="Message"
                 name="message"
                 rows="3"
                 defaultValue={message}
