@@ -46,9 +46,7 @@ function CreateUser() {
       </Row>
       <Row>
         <Col className="mx-auto my-5">
-          <h1 id="about">
-            <style>Create New User</style>
-          </h1>
+          <h3>Create New User</h3>
           <Form onSubmit={submit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>

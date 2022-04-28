@@ -33,9 +33,8 @@ function Login({ setUser }) {
     <Container fluid="md">
       <Row>
         <Col className="mx-auto my-5">
-          <h1 id="about">
-            <style>Login</style>
-          </h1>
+          <h3>Login</h3>
+          <h4>Use username: test password: test</h4>
           <Form onSubmit={submit}>
             <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Label>Username</Form.Label>
