@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+
 
 //login page for owners back end
-function Login() {
+function Login({ setUser }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false)
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    await fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include',
+      body: JSON.stringify({
+        username,
+        password
+      }),
+    });
+    setUser(username);
+    setRedirect(true)
+  }
+
+  if (redirect) {
+    return <Navigate to='/dashboard' />;
+  }
+
   return (
     <Container fluid="md">
       <Row>
@@ -11,24 +36,19 @@ function Login() {
           <h1 id="about">
             <style>Login</style>
           </h1>
-          <Form>
+          <Form onSubmit={submit}>
             <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Username" />
+              <Form.Control type="username" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
             <Button variant="primary" type="submit">
               Login
             </Button>
           </Form>
-          <Link to={"/create"}>
-            <Button variant="primary" className="my-3">
-              Create New User
-            </Button>
-          </Link>
         </Col>
       </Row>
     </Container>

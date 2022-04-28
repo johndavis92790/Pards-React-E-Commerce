@@ -4,7 +4,61 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/Img/logo_main.png";
 import "../../App.css";
 
-function Footer() {
+function Footer({ user, setUser }) {
+  const logout = async () => {
+    await fetch("http://localhost:4000/auth/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include'
+    });
+    setUser('');
+  }
+
+  let menu;
+  if (user === undefined) {
+    menu = (
+      <>
+        <Nav.Link as={Link} to="/">
+          <span className="navText mx-3 text-color">Home</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/product">
+          <span className="navText mx-3 text-color">Shop Products</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/about">
+          <span className="navText mx-3 text-color">Who We Are</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/contact">
+          <span className="navText mx-3 text-color">Contact Us!</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/cart">
+          <span className="navText mx-3 text-color">Cart</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/login">
+          <span className="navText mx-3 text-color">Login</span>
+        </Nav.Link>
+      </>
+    )
+  } else {
+    menu = (
+      <>
+        <Nav.Link as={Link} to="/">
+          <span className="navText mx-3 text-color">Home</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/product">
+          <span className="navText mx-3 text-color">Shop Products</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/upload">
+          <span className="navText mx-3 text-color">Upload Products</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/dashboard">
+          <span className="navText mx-3 text-color">Dashboard</span>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/" onClick={logout}>
+          <span className="navText mx-3 text-color">Logout</span>
+        </Nav.Link>
+      </>
+    )
+  }
   return (
     <Navbar expand="lg">
       <Container fluid>
@@ -31,27 +85,7 @@ function Footer() {
             </p>
           </Navbar.Text>
           {/*All Navigation links below*/}
-          <Nav.Link as={Link} to="/">
-            <span className="navText mx-3 text-color">Home</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/product">
-            <span className="navText mx-3 text-color">Our Products</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/about">
-            <span className="navText mx-3 text-color">Who We Are</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/contact">
-            <span className="navText mx-3 text-color">Contact Us!</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/login">
-            <span className="navText mx-3 text-color">Login</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/cart">
-            <span className="navText mx-3 text-color">Cart</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/dashboard">
-            <span className="navText mx-3 text-color">Dashboard</span>
-          </Nav.Link>
+          {menu}
         </Nav>
       </Container>
     </Navbar>

@@ -1,8 +1,14 @@
 import ReactFileReader from "react-file-reader";
+import { Link } from "react-router-dom";
 import "../../App.css"
+import {
+  Row,
+  Col,
+  Button,
+} from "react-bootstrap";
 
 //page for owners to easily upload updated product information
-function UploadCSV() {
+function UploadCSV(props) {
 
   //reads the file or files chose by owner
   const readAllFiles = async (allFiles) => {
@@ -58,16 +64,33 @@ function UploadCSV() {
 
   //returns title and button to choose file or files, only allows .csv files
   return (
-    <div className="uploadPage my-5">
-      <h1>Express File Upload</h1>
-      <ReactFileReader
-        multipleFiles={true}
-        handleFiles={readAllFiles}
-        fileTypes={".csv"}
-      >
-        <button className="btn btn-success my-3">Upload</button>
-      </ReactFileReader>
-    </div>
+    <>{props.user ?
+      <>
+        <Row>
+          <Col>
+            <Link to={"/dashboard"}>
+              <Button variant="primary" className="m-3">
+                Back to Dashboard
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+        <div className="uploadPage my-5">
+          <h1>Express File Upload</h1>
+          <h3>.csv files only!</h3>
+          <ReactFileReader
+            multipleFiles={true}
+            handleFiles={readAllFiles}
+            fileTypes={".csv"}
+          >
+            <button className="btn btn-success my-3">Upload</button>
+          </ReactFileReader>
+        </div>
+      </>
+      : <>
+        <h1>You are not authorized!</h1>
+      </>
+    }</>
   );
 }
 

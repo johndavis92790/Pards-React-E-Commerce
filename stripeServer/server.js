@@ -73,3 +73,5 @@ app.post('/create-checkout-session', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Stripe server running on port ${PORT}!`);
 });
+
+// \"cd stripeServer && npm run devStart\"
