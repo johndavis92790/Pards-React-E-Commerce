@@ -9,10 +9,10 @@ function Login({ setUser }) {
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false)
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:4000/auth/login", {
+    fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include',
@@ -20,9 +20,10 @@ function Login({ setUser }) {
         username,
         password
       }),
+    }).then((res) => {
+      setUser(username);
+      setRedirect(true);
     });
-    setUser(username);
-    setRedirect(true)
   }
 
   if (redirect) {

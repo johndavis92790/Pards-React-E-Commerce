@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     (
       async () => {
-        const response = await fetch("http://localhost:4000/auth/user", {
+        const response = await fetch("http://localhost:3003/auth/user", {
           headers: { "Content-Type": "application/json" },
           credentials: 'include'
         });
