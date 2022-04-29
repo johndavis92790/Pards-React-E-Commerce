@@ -12,7 +12,7 @@ function Login({ setUser }) {
   const submit = (e) => {
     e.preventDefault();
 
-    fetch("/auth/login", {
+    fetch("http://localhost:3003/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include',
