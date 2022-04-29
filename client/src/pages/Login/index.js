@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 //login page for owners back end
@@ -48,11 +48,6 @@ function Login({ setUser }) {
               Login
             </Button>
           </Form>
-          <Link to={"/create"}>
-            <Button variant="primary" className="m-3">
-              Create New User
-            </Button>
-          </Link>
         </Col>
       </Row>
     </Container>
