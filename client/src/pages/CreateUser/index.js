@@ -17,7 +17,7 @@ function CreateUser() {
       password
     })
 
-    await fetch("http://localhost:4000/auth/register", {
+    await fetch("/api/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

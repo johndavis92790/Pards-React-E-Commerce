@@ -3,10 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 dotenv.config();
-const User = require('../models/user');
+const User = require('../../models/User');
 
 router.post('/register', async (req, res) => {
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
   const user = new User({

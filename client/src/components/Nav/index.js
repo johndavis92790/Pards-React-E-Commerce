@@ -6,7 +6,7 @@ import "../../App.css";
 
 function Navigation({ user, setUser }) {
   const logout = async () => {
-    await fetch("http://localhost:3003/auth/logout", {
+    await fetch("/api/user/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include'

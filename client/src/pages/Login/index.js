@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-
 
 //login page for owners back end
 function Login({ setUser }) {
@@ -9,10 +8,10 @@ function Login({ setUser }) {
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false)
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3003/auth/login", {
+    fetch("/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: 'include',
@@ -39,16 +38,21 @@ function Login({ setUser }) {
           <Form onSubmit={submit}>
             <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+              <Form.Control type="username" placeholder="Username" onChange={e => setUsername(e.target.value)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+              <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Login
             </Button>
           </Form>
+          <Link to={"/create"}>
+            <Button variant="primary" className="m-3">
+              Create New User
+            </Button>
+          </Link>
         </Col>
       </Row>
     </Container>
