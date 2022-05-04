@@ -51,7 +51,7 @@ function UploadCSV(props) {
   //uploads data array to backend
   function uploadData(arr) {
     var csvString = JSON.stringify(arr);
-    fetch("/upload", {
+    fetch("/api/upload", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: csvString,

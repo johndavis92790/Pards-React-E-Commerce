@@ -10,7 +10,7 @@ import {
 import { useShoppingCart } from "../Context/CartContext";
 
 // single part card for the product page
-const Parts = ({ parts, loading }) => {
+const Parts = ({ parts, loading, setCartModalShow }) => {
   //get access to the shopping cart state
   const cart = useShoppingCart();
   if (loading) {
@@ -57,7 +57,8 @@ const Parts = ({ parts, loading }) => {
                   <ListGroupItem>${mapOrRetail(part)}</ListGroupItem>
                   <Button
                     onClick={() => {
-                      cart.addItem(part);
+                      cart.addItem(part, 1);
+                      setCartModalShow(true);
                     }}
                     variant="outline-primary"
                   >

@@ -5,7 +5,7 @@ import axios from "axios";
 import { Container, Row, Button, Form, Col } from "react-bootstrap";
 
 //product page for users to see available products and to browse and shop for them
-const Product = () => {
+const Product = ({ setCartModalShow }) => {
   //useStates for the parts array, loading status for pagination, parts per page for pagination and the current page for pagination
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -93,7 +93,7 @@ const Product = () => {
             </Form>
           </Col>
         </Row>
-        <Parts parts={currentParts} loading={loading}></Parts>
+        <Parts parts={currentParts} loading={loading} setCartModalShow={setCartModalShow}></Parts>
         <Pagination
           partsPerPage={partsPerPage}
           totalParts={parts.length}

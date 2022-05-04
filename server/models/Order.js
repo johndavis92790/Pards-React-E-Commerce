@@ -86,6 +86,15 @@ const orderSchema = new Schema(
       type: String,
       trim: true,
     },
+    utcString: {
+      type: String,
+    },
+    utcNumber: {
+      type: Number,
+    },
+    stripeId: {
+      type: String,
+    },
   },
   {
     toJSON: {

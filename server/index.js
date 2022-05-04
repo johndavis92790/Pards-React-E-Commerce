@@ -6,17 +6,12 @@ var bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
 const router = require("express").Router();
-const dbUpdate = require("./seeds/dbUpdate");
-
 const db = require("./config/connection");
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(cookieParser());
-
 app.use(express.urlencoded({ extended: false }));
-
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
   bodyParser.urlencoded({
@@ -26,11 +21,11 @@ app.use(
   })
 );
 app.use(express.json());
-
 app.use(cors({
   credentials: true,
   origin: ['http://localhost:3000', 'https://ancient-island-13793.herokuapp.com/']
 }));
+app.use(routes);
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
@@ -41,15 +36,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use(routes);
-
 db.once("open", () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
   });
-});
-
-//post route for uploading product data
-app.post("/upload", (req, res) => {
-  dbUpdate(req, res);
 });

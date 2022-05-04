@@ -30,6 +30,9 @@ const partSchema = new Schema(
     mapPrice: {
       type: String,
     },
+    priceInCents: {
+      type: Number,
+    }
   },
   {
     toJSON: {

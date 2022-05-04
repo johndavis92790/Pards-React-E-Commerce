@@ -49,6 +49,14 @@ const CompletedOrders = (props) => {
     }
   };
 
+  function mapOrRetail(product) {
+    if (product.mapPrice === "") {
+      return product.retailPrice;
+    } else {
+      return product.mapPrice;
+    }
+  }
+
   //returns the orders as full width cards with all of the order details like the products and the customer information
   return (
     <>{props.user ?
@@ -69,16 +77,15 @@ const CompletedOrders = (props) => {
             </Col>
           </Row>
           <Row>
-            {orders.map((order, i) => {
+            {orders.map((order) => {
               if (order.status === "Completed") {
                 return (
-                  <Card className="m-4">
+                  <Card className="m-4" key={order._id}>
                     <Card.Header>Order #{order.orderNumber}</Card.Header>
                     <Card.Body>
                       <Card.Title style={{ backgroundColor: "#ff8080" }}>
                         Order Status - {order.status}
                       </Card.Title>
-                      <Card.Text>
                         <Row>
                           <Col sm={3}>
                             <Table
@@ -96,12 +103,12 @@ const CompletedOrders = (props) => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {order.items.map((item, i) => {
+                                {order.items.map((item) => {
                                   return (
-                                    <tr>
+                                    <tr key={item._id}>
                                       <td>{item.quantity}</td>
                                       <td>{item.partNumber}</td>
-                                      <td>${item.retailPrice}</td>
+                                      <td>${mapOrRetail(item)}</td>
                                     </tr>
                                   );
                                 })}
@@ -114,30 +121,26 @@ const CompletedOrders = (props) => {
                             <h5>Tax: ${order.tax}</h5>
                             <h5>Total: ${order.total}</h5>
                           </Col>
-                          <Col sm={2}>
-                            <h5>Billing Address:</h5>
-                            <p>
-                              {order.billingFirstName} {order.billingLastName}
-                            </p>
-                            <p>{order.billingAddress1}</p>
-                            <p>{order.billingAddress2}</p>
-                            <p>
-                              {order.billingCity}, {order.billingState}{" "}
-                              {order.billingZip}
-                            </p>
-                          </Col>
-                          <Col sm={2}>
-                            <h5>Shipping Address:</h5>
-                            <p>
-                              {order.shippingFirstName} {order.shippingLastName}
-                            </p>
-                            <p>{order.shippingAddress1}</p>
-                            <p>{order.shippingAddress2}</p>
-                            <p>
-                              {order.shippingCity}, {order.shippingState}{" "}
-                              {order.shippingZip}
-                            </p>
-                          </Col>
+                        <Col sm={2}>
+                          <h5>Billing Address:</h5>
+                          <p>
+                            {order.billingFirstName} {order.billingLastName}<br />
+                            {order.billingAddress1}<br />
+                            {order.billingAddress2}<br />
+                            {order.billingCity}, {order.billingState}{" "}
+                            {order.billingZip}<br />
+                          </p>
+                        </Col>
+                        <Col sm={2}>
+                          <h5>Shipping Address:</h5>
+                          <p>
+                            {order.shippingFirstName} {order.shippingLastName}<br />
+                            {order.shippingAddress1}<br />
+                            {order.shippingAddress2}<br />
+                            {order.shippingCity}, {order.shippingState}{" "}
+                            {order.shippingZip}<br />
+                          </p>
+                        </Col>
                           <Col sm={3}>
                             <h5>Email:</h5>
                             <p>{order.billingEmail}</p>
@@ -145,7 +148,6 @@ const CompletedOrders = (props) => {
                             <p>{order.tracking}</p>
                           </Col>
                         </Row>
-                      </Card.Text>
                       <Form>
                         <Row>
                           <Col>

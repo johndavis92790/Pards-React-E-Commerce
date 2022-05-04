@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { statesArray } from "../../utils/helpers";
 import { useShoppingCart } from "../../components/Context/CartContext";
 import { Link } from "react-router-dom";
@@ -20,10 +20,21 @@ const Cart = () => {
   //shopping cart variable
   const items = cart.shoppingCart;
 
+  const [itemsArray, setItemsArray] = useState([]);
+
+  useEffect(() => {
+    var data = localStorage.getItem("shoppingCart");
+    if (data) {
+      setItemsArray(JSON.parse(data));
+    }
+  }, []);
+
   //pulls form data from page into an object, inserts the shopping cart array and calculates totals and tax and sets status to open when the user places the order
   const formData = (event) => {
     event.preventDefault();
     var form = event.target;
+    const utcNumber = new Date().getTime();
+    const utcString = new Date().toUTCString();
     var orderObj = {
       billingFirstName: form.formGridBillingFName.value,
       billingLastName: form.formGridBillingLName.value,
@@ -40,14 +51,16 @@ const Cart = () => {
       shippingCity: form.formGridShippingCity.value,
       shippingState: form.formGridShippingState.value,
       shippingZip: form.formGridShippingZip.value,
-      items: items,
+      items: itemsArray,
       subtotal: calculateSubtotal(),
       shipping: "25.00",
       tax: calculateTax(),
       total: calculateTotal(),
       status: "Open",
+      utcNumber: utcNumber,
+      utcString: utcString,
     };
-    uploadOrder(orderObj);
+    stripeSession(orderObj);
   };
 
   //some parts only have retail prices and no MAP prices, this defaults to the MAP price if it exists, then returns the retail price if it doesn't exist
@@ -59,16 +72,52 @@ const Cart = () => {
     }
   }
 
+  const stripeSession = (orderObj) => {
+    fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderObj)
+    }).then(async (res) => {
+      if (res.ok) return res.json();
+      return res.json().then(json => Promise.reject(json))
+    }).then(async (session) => {
+      await uploadOrder(orderObj);
+      return session;
+    }).then(async (session) => {
+      await addStripeToOrder(orderObj.utcNumber, session.id)
+      return session;
+    }).then((session) => {
+      window.location = session.url
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   //uploads placed order to backend
-  const uploadOrder = (orderObj) => {
-    fetch("/api/order", {
+  const uploadOrder = async (orderObj) => {
+    await fetch("/api/order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderObj),
     }).then((res) => {
       console.log("Upload order complete! response:", res);
-      window.alert("Order completed!");
-      window.location.href = "/";
+    }).catch(err => {
+      console.log(err)
+    });
+  };
+
+  // adds stripe id# to order in backend
+  const addStripeToOrder = async (utcNumber, sessionId) => {
+    await fetch(`/api/order/stripe/${utcNumber}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ stripeId: sessionId }),
+    }).then((res) => {
+      console.log("Order updated", res);
+    }).catch(err => {
+      console.log(err)
     });
   };
 
@@ -77,8 +126,8 @@ const Cart = () => {
     var total = 0;
     if (items[0]) {
       for (let i = 0; i < items.length; i++) {
-        var retail = parseFloat(mapOrRetail(items[i]));
-        total = total + retail * items[i].quantity;
+        var price = parseFloat(mapOrRetail(items[i]));
+        total = total + price * items[i].quantity;
       }
       return total.toFixed(2);
     } else {
@@ -234,7 +283,7 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, i) => {
+                {items.map((item) => {
                   return (
                     <tr key={item._id}>
                       <td>
@@ -282,7 +331,7 @@ const Cart = () => {
                           </Row>
                         </Form>
                       </td>
-                      <td className="price-align">${item.retailPrice}</td>
+                      <td className="price-align">${mapOrRetail(item)}</td>
                       <td>
                         <Button
                           as={Link}

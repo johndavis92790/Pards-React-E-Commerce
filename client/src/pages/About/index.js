@@ -19,8 +19,10 @@ function About() {
           />
           {/* Short history and company values/goals */}
           <div className="aboutBody">
-            <p className="mb-0">
-              OUR HISTORY <p></p>
+            <h5>
+              OUR HISTORY
+            </h5>
+            <p>
               Pard's Equalizer Trailer Hitch Co., Inc. was started in 1977 at
               Pard's backyard in Midvale, Utah. Although affectionately known as
               Pard, his name is actually Jerry Martin. Jerry was a millwright

@@ -1,8 +1,7 @@
+import React from "react";
 import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import React from "react";
 import logo from "../../assets/Img/logo_main.png";
-import "../../App.css";
 
 function Navigation({ user, setUser }) {
   const logout = async () => {
