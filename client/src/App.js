@@ -60,20 +60,20 @@ function App() {
         </div>
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/cancel" element={<Cancel />} />
-          <Route path="/product" element={<Product setCartModalShow={setCartModalShow}/>} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/upload" element={<UploadCSV user={user}/>} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login setUser={setUser}/>} />
-          <Route path="/create" element={<CreateUser />} />
-          <Route path="/orders" element={<Orders user={user} setOrderModalShow={setOrderModalShow}/>} />
-          <Route path="/completed" element={<Completed user={user} setOrderModalShow={setOrderModalShow}/>} />
-          <Route path="/deleted" element={<Deleted user={user} setOrderModalShow={setOrderModalShow}/>} />
-          <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} setOrderModalShow={setOrderModalShow}/>} />
-          <Route path="/single/:partId" element={<SingleProduct setCartModalShow={setCartModalShow}/>} />
+          <Route path="success" element={<Success />} />
+          <Route path="cancel" element={<Cancel />} />
+          <Route path="product" element={<Product setCartModalShow={setCartModalShow}/>} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="upload" element={<UploadCSV user={user}/>} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="login" element={<Login setUser={setUser}/>} />
+          <Route path="create" element={<CreateUser />} />
+          <Route path="orders" element={<Orders user={user} setOrderModalShow={setOrderModalShow}/>} />
+          <Route path="completed" element={<Completed user={user} setOrderModalShow={setOrderModalShow}/>} />
+          <Route path="deleted" element={<Deleted user={user} setOrderModalShow={setOrderModalShow}/>} />
+          <Route path="dashboard" element={<Dashboard user={user} setUser={setUser} setOrderModalShow={setOrderModalShow}/>} />
+          <Route path="single/:partId" element={<SingleProduct setCartModalShow={setCartModalShow}/>} />
         </Routes>
         <div className="App-footer">
           <Footer user={user} setUser={setUser}></Footer>
