@@ -44,6 +44,16 @@ const orderController = {
       res.status(500).json(error);
     }
   },
+  addStripeId: async function (req, res) {
+    try {
+      const orderData = await Order.findOneAndUpdate({
+        utcNumber: req.params.utcNumber,
+      }, req.body);
+      res.json(orderData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 };
 
 module.exports = orderController;

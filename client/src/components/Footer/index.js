@@ -1,60 +1,112 @@
-import React from "react";
-import { Navbar, Nav, Container, Image } from "react-bootstrap";
+import React from 'react';
+import { MDBFooter } from 'mdb-react-ui-kit';
 import { Link } from "react-router-dom";
 import logo from "../../assets/Img/logo_main.png";
-import "../../App.css";
+import { FaHome, FaPhone } from "react-icons/fa";
 
-function Footer() {
+function Footer({ user, setUser }) {
+  const logout = async () => {
+    await fetch("/api/user/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include'
+    });
+    setUser('');
+  }
+  let menu;
+  if (user === undefined) {
+    menu = (
+      <>
+        <p>
+          <Link as={Link} to="/product">
+            Shop Products
+          </Link>
+        </p>
+        <p>
+          <Link as={Link} to="/cart">
+            Cart
+          </Link>
+        </p>
+        <p>
+          <Link as={Link} to="/login">
+            Login
+          </Link>
+        </p>
+      </>
+    )
+  } else {
+    menu = (
+      <>
+        <p>
+          <Link as={Link} to="/product">
+            Shop Products
+          </Link>
+        </p>
+        <p>
+          <Link as={Link} to="/upload">
+            Upload
+          </Link>
+        </p>
+        <p>
+          <Link as={Link} to="/dashboard">
+            Dashboard
+          </Link>
+        </p>
+        <p>
+          <Link as={Link} to="/" onClick={logout}>
+            Logout
+          </Link>
+        </p>
+      </>
+    )
+  }
   return (
-    <Navbar expand="lg">
-      <Container fluid>
-        {/* Logo/Link to home page */}
-        <Navbar.Brand as={Link} to="/">
-          <span className="navText mx-3 text-color">
-            <Image src={logo} alt="Logo" height={150} />
-          </span>
-        </Navbar.Brand>
-        <Nav className="me-auto align">
-          {/* Text for Company Location, Address, Hours, and phone number */}
-          <Navbar.Text className="text-center text-color">
-            <a href="https://www.google.com/maps/place/5910+300+W,+Murray,+UT+84107">
-              5910 S 300 W
-              <br />
-              Murray, UT 84107
-            </a>
-            <br />
-            <p className="text-color">
-              Call Us Now!: <a href="tel:+1-801-262-4864">801-262-4864</a>
-            </p>
-            <p className="text-color">
-              Open Monday - Friday 8:30 am to 5:00 pm
-            </p>
-          </Navbar.Text>
-          {/*All Navigation links below*/}
-          <Nav.Link as={Link} to="/">
-            <span className="navText mx-3 text-color">Home</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/product">
-            <span className="navText mx-3 text-color">Our Products</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/about">
-            <span className="navText mx-3 text-color">Who We Are</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/contact">
-            <span className="navText mx-3 text-color">Contact Us!</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/login">
-            <span className="navText mx-3 text-color">Login</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/cart">
-            <span className="navText mx-3 text-color">Cart</span>
-          </Nav.Link>
-          <Nav.Link as={Link} to="/dashboard">
-            <span className="navText mx-3 text-color">Dashboard</span>
-          </Nav.Link>
-        </Nav>
-      </Container>
-    </Navbar>
+    <MDBFooter bgColor='none' style={{ backgroundColor: "#00335a" }} className='App-footer text-center text-color'>
+      <section className=' vw-100'>
+        <div className='container text-md-start mt-5'>
+          <div className='row mt-3'>
+            <div className='col-md-3 col-lg-2 col-xl-2 mx-auto mb-4'>
+              <Link as={Link} to="/">
+                <img src={logo} alt="Logo" />
+              </Link>
+            </div>
+            <div className='col-md-3 col-lg-2 col-xl-2 mx-auto mb-4'>
+              <p>
+                <Link as={Link} to="/">
+                  Home
+                </Link>
+              </p>
+              <p>
+                <Link as={Link} to="/about">
+                  Who We Are
+                </Link>
+              </p>
+              <p>
+                <Link as={Link} to="/contact">
+                  Contact
+                </Link>
+              </p>
+            </div>
+            <div className='col-md-3 col-lg-2 col-xl-2 mx-auto mb-4'>
+              {menu}
+            </div>
+            <div className='col-md-3 col-lg-2 col-xl-2 mx-auto mb-md-0 mb-4'>
+              <p>
+                <a href="https://www.google.com/maps/place/5910+300+W,+Murray,+UT+84107">
+                  <FaHome className='fas fa-home me-2' />
+                  5910 S 300 W
+                  <br />
+                  Murray, UT 84107
+                </a>
+              </p>
+              <p>
+                <a href="tel:+1-801-262-4864"><FaPhone className='fas fa-phone me-2' />801-262-4864</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </MDBFooter>
   );
 }
 

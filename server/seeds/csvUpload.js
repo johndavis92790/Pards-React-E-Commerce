@@ -10,10 +10,17 @@ module.exports = function csvUpload(req, res) {
   var collection = db.collection("parts");
 
   //function to calculate the price in cents for the stripe server
-  function priceToCents(price) {
-    var dollars = parseFloat(price);
-    var cents = dollars * 100;
-    return cents;
+  function priceToCents(part) {
+    console.log(part)
+    if (part["MAP"] === "") {
+      var dollars = parseFloat(part["Retail"]);
+      var cents = Math.round(dollars * 100);
+      return cents;
+    } else {
+      var dollars = parseFloat(part["MAP"]);
+      var cents = Math.round(dollars * 100);
+      return cents;
+    }
   }
 
   //map function to map over each product and upload it to the mongo database one at a time,
@@ -30,7 +37,7 @@ module.exports = function csvUpload(req, res) {
       photo: part[`Primary\r`],
       retailPrice: part["Retail"],
       mapPrice: part["MAP"],
-      priceInCents: priceToCents(part["Retail"]),
+      priceInCents: priceToCents(part),
     };
     collection.insertOne(oneRow, (err, result) => {
       if (err) console.log(err);

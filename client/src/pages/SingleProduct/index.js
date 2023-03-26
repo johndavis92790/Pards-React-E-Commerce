@@ -6,7 +6,7 @@ import { useShoppingCart } from "../../components/Context/CartContext";
 import { FaArrowLeft } from "react-icons/fa";
 
 //page to display more information of a single product
-const SingleProduct = () => {
+const SingleProduct = ({ setCartModalShow }) => {
   //useParams to get the object id from the url to find the specific product to display
   const { partId } = useParams();
 
@@ -60,8 +60,8 @@ const SingleProduct = () => {
             <Form
               onSubmit={(event) => {
                 event.preventDefault();
-                console.log("test");
-                cart.addItem(event, part);
+                cart.addItem(part, event.target[0].valueAsNumber);
+                setCartModalShow(true);
               }}
             >
               <Row>
@@ -70,12 +70,9 @@ const SingleProduct = () => {
                     size="sm"
                     className="m-0"
                     controlId="formQuantity"
-                    style={{ width: "80px" }}
                   >
-                    <Form.Control type="number" defaultValue={1} />
+                    <Form.Control type="number" defaultValue={1} style={{ width: "80px" }}/>
                     <Button
-                      as={Link}
-                      to="/cart"
                       type="submit"
                       id="quantityButton"
                       value={part._id}

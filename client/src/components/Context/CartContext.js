@@ -24,20 +24,19 @@ export function CartProvider({ children }) {
   }, [shoppingCart]);
 
   // add an item to the shoping cart array
-  function addItem(item) {
+  function addItem(item, quantity) {
     setShoppingCart((previousShoppingCart) => {
-      window.alert("Product added to cart!");
       var forLoop = false;
       //checks if the shopping cart exists yet
       if (previousShoppingCart.length === 0) {
         previousShoppingCart.push(item);
-        previousShoppingCart[0].quantity = 1;
+        previousShoppingCart[0].quantity = quantity;
         return previousShoppingCart;
         //if it already does exist, then it checks to see if that exact item is already in the cart and adds to the quantity, rather than adding the product again
       } else {
         for (var i = 0; i < previousShoppingCart.length; i++) {
           if (previousShoppingCart[i]._id === item._id) {
-            previousShoppingCart[i].quantity++;
+            previousShoppingCart[i].quantity = previousShoppingCart[i].quantity + quantity;
             forLoop = true;
             break;
           } else {
@@ -48,7 +47,7 @@ export function CartProvider({ children }) {
           return previousShoppingCart;
           //if the item is not already in the cart, it adds it to the array
         } else {
-          item.quantity = 1;
+          item.quantity = quantity;
           previousShoppingCart.push(item);
           return [...previousShoppingCart];
         }

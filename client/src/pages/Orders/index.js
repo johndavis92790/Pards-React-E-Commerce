@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 //page to see current and open orders placed on the website
-const Orders = () => {
+const Orders = ({ user, setOrderModalShow }) => {
 
   //useState to keep track of the open orders array
   const [orders, setOrders] = useState([]);
@@ -40,11 +40,8 @@ const Orders = () => {
   const deleteOrder = (event) => {
     var orderId = event.target.attributes.value.value;
     try {
-      const res = axios.put(`/api/order/${orderId}`, { status: `Deleted` });
-      refreshPage();
-      console.log(res.data);
-      window.alert("Order deleted!");
-      refreshPage();
+      axios.put(`/api/order/${orderId}`, { status: `Deleted` });
+      setOrderModalShow(true);
     } catch (err) {
       console.log(err);
     }
@@ -55,13 +52,11 @@ const Orders = () => {
     var form = event.target;
     var trackingObj = { status: `Shipped`, tracking: form.formTracking.value };
     try {
-      const res = axios.put(
+      axios.put(
         `/api/order/${form.trackingButton.value}`,
         trackingObj
       );
-      console.log(res.data);
-      window.alert("Order shipped!");
-      refreshPage();
+      setOrderModalShow(true);
     } catch (err) {
       console.log(err);
     }
@@ -71,14 +66,20 @@ const Orders = () => {
   const completeOrder = (event) => {
     var orderId = event.target.attributes.value.value;
     try {
-      const res = axios.put(`/api/order/${orderId}`, { status: `Completed` });
-      console.log(res.data);
-      window.alert("Order completed!");
-      refreshPage();
+      axios.put(`/api/order/${orderId}`, { status: `Completed` });
+      setOrderModalShow(true);
     } catch (err) {
       console.log(err);
     }
   };
+
+  function mapOrRetail(product) {
+    if (product.mapPrice === "") {
+      return product.retailPrice;
+    } else {
+      return product.mapPrice;
+    }
+  }
 
   //displays item title background color depending on it the order has been shipped or not
   function statusColor(order) {
@@ -99,156 +100,157 @@ const Orders = () => {
 
   //returns the orders as full width cards with all of the order details like the products and the customer information
   return (
-    <Container className="m-3">
-      <Row>
-        <Col>
-          <Link to={"/dashboard"}>
-            <Button variant="primary" className="m-3">
-              Back to Dashboard
-            </Button>
-          </Link>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="col-sm-6 mx-auto">
-          <h2>Open Orders</h2>
-        </Col>
-      </Row>
-      <Row>
-        {orders.map((order, i) => {
-          if (order.status === "Deleted") {
-            return <></>;
-          } else if (order.status === "Completed") {
-            return <></>;
-          } else {
-            return (
-              <Card className="m-4">
-                <Card.Header>Order #{order.orderNumber}</Card.Header>
-                <Card.Body>
-                  {statusColor(order)}
-                  <Card.Text>
-                    <Row>
-                      <Col sm={3}>
-                        <Table striped bordered hover size="sm">
-                          <thead>
-                            <tr>
-                              <th>Quantity</th>
-                              <th>Part #</th>
-                              <th>Price</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {order.items.map((item, i) => {
-                              return (
-                                <tr>
-                                  <td>{item.quantity}</td>
-                                  <td>{item.partNumber}</td>
-                                  <td>${item.retailPrice}</td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </Table>
-                      </Col>
-                      <Col sm={2}>
-                        <h5>Subtotal: ${order.subtotal}</h5>
-                        <h5>Shipping: ${order.shipping}</h5>
-                        <h5>Tax: ${order.tax}</h5>
-                        <h5>Total: ${order.total}</h5>
-                      </Col>
-                      <Col sm={2}>
-                        <h5>Billing Address:</h5>
-                        <p>
-                          {order.billingFirstName} {order.billingLastName}
-                        </p>
-                        <p>{order.billingAddress1}</p>
-                        <p>{order.billingAddress2}</p>
-                        <p>
-                          {order.billingCity}, {order.billingState}{" "}
-                          {order.billingZip}
-                        </p>
-                      </Col>
-                      <Col sm={2}>
-                        <h5>Shipping Address:</h5>
-                        <p>
-                          {order.shippingFirstName} {order.shippingLastName}
-                        </p>
-                        <p>{order.shippingAddress1}</p>
-                        <p>{order.shippingAddress2}</p>
-                        <p>
-                          {order.shippingCity}, {order.shippingState}{" "}
-                          {order.shippingZip}
-                        </p>
-                      </Col>
-                      <Col sm={3}>
-                        <h5>Email:</h5>
-                        <p>{order.billingEmail}</p>
-                        <h5>Tracking:</h5>
-                        <p>{order.tracking}</p>
-                      </Col>
-                    </Row>
-                  </Card.Text>
-                  <Form onSubmit={shipOrder}>
-                    <Row>
-                      <Col>
-                        <Form.Group className="mb-3" controlId="formTracking">
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter tracking number"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col>
-                        <Button
-                          type="submit"
-                          id="trackingButton"
-                          value={order._id}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Order Shipped
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          onClick={completeOrder}
-                          id="completeButton"
-                          value={order._id}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Order Completed
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          href={`mailto:${order.billingEmail}`}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Email Customer
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          onClick={deleteOrder}
-                          id="deleteButton"
-                          value={order._id}
-                          variant="primary"
-                          className="mx-2"
-                        >
-                          Delete Order
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form>
-                </Card.Body>
-              </Card>
-            );
-          }
-        })}
-      </Row>
-    </Container>
+    <>{user ?
+      <>
+        <Container className="m-3">
+          <Row>
+            <Col>
+              <Link to={"/dashboard"}>
+                <Button variant="primary" className="m-3">
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="col-sm-6 mx-auto">
+              <h2>Open Orders</h2>
+            </Col>
+          </Row>
+          <Row>
+            {orders.map((order) => {
+              if (order.status === "Deleted") {
+                return <></>;
+              } else if (order.status === "Completed") {
+                return <></>;
+              } else {
+                return (
+                  <Card className="m-4" key={order._id}>
+                    <Card.Header>Order #{order.orderNumber}</Card.Header>
+                    <Card.Body>
+                      {statusColor(order)}
+                      <Row>
+                        <Col sm={3}>
+                          <Table striped bordered hover size="sm">
+                            <thead>
+                              <tr>
+                                <th>Quantity</th>
+                                <th>Part #</th>
+                                <th>Price</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {order.items.map((item) => {
+                                return (
+                                  <tr key={item._id}>
+                                    <td>{item.quantity}</td>
+                                    <td>{item.partNumber}</td>
+                                    <td>${mapOrRetail(item)}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </Table>
+                        </Col>
+                        <Col sm={2}>
+                          <h5>Subtotal: ${order.subtotal}</h5>
+                          <h5>Shipping: ${order.shipping}</h5>
+                          <h5>Tax: ${order.tax}</h5>
+                          <h5>Total: ${order.total}</h5>
+                        </Col>
+                        <Col sm={2}>
+                          <h5>Billing Address:</h5>
+                          <p>
+                            {order.billingFirstName} {order.billingLastName}<br />
+                            {order.billingAddress1}<br />
+                            {order.billingAddress2}<br />
+                            {order.billingCity}, {order.billingState}{" "}
+                            {order.billingZip}<br />
+                          </p>
+                        </Col>
+                        <Col sm={2}>
+                          <h5>Shipping Address:</h5>
+                          <p>
+                            {order.shippingFirstName} {order.shippingLastName}<br />
+                            {order.shippingAddress1}<br />
+                            {order.shippingAddress2}<br />
+                            {order.shippingCity}, {order.shippingState}{" "}
+                            {order.shippingZip}<br />
+                          </p>
+                        </Col>
+                        <Col sm={3}>
+                          <h5>Email:</h5>
+                          <p>{order.billingEmail}</p>
+                          <h5>Tracking:</h5>
+                          <p>{order.tracking}</p>
+                        </Col>
+                      </Row>
+                      <Form onSubmit={shipOrder}>
+                        <Row>
+                          <Col>
+                            <Form.Group className="mb-3" controlId="formTracking">
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter tracking number"
+                              />
+                            </Form.Group>
+                          </Col>
+                          <Col>
+                            <Button
+                              type="submit"
+                              id="trackingButton"
+                              value={order._id}
+                              variant="primary"
+                              className="mx-2"
+                            >
+                              Order Shipped
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              onClick={completeOrder}
+                              id="completeButton"
+                              value={order._id}
+                              variant="primary"
+                              className="mx-2"
+                            >
+                              Order Completed
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              href={`mailto:${order.billingEmail}`}
+                              variant="primary"
+                              className="mx-2"
+                            >
+                              Email Customer
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              onClick={deleteOrder}
+                              id="deleteButton"
+                              value={order._id}
+                              variant="primary"
+                              className="mx-2"
+                            >
+                              Delete Order
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </Card.Body>
+                  </Card>
+                );
+              }
+            })}
+          </Row>
+        </Container>
+      </>
+      : <>
+        <h1>You are not authorized!</h1>
+      </>
+    }</>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Row, Container, Form, Button } from "react-bootstrap";
-/* import { FaPhone, FaEnvelope } from "react-icons/fa"; */
+
 
 import { validateEmail } from "../../utils/helpers";
 
@@ -43,6 +43,7 @@ function Contact() {
   };
 
   return (
+    /* Short message inviting user to contact */
     <Container fluid="md" className="my-5">
       <Row>
         <Col sm={4}>
@@ -56,6 +57,7 @@ function Contact() {
 
           <h5>If you prefer to call our number is 801-262-4864</h5>
         </Col>
+        {/* Contact input form */}
         <Col sm={4}>
           <Form id="contact-form" className="m-4" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicName">
@@ -83,7 +85,7 @@ function Contact() {
               <Form.Control
                 type="text"
                 as="textarea"
-                placeholder="Name"
+                placeholder="Message"
                 name="message"
                 rows="3"
                 defaultValue={message}
@@ -95,6 +97,7 @@ function Contact() {
                 <p>{errorMessage}</p>
               </div>
             )}
+            {/* Submit button */}
             <Button
               className="button-color  mb-5"
               data-testid="button"

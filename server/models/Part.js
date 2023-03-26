@@ -1,4 +1,4 @@
-const { Schema, Types, model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 //part schema
 const partSchema = new Schema(
@@ -30,6 +30,9 @@ const partSchema = new Schema(
     mapPrice: {
       type: String,
     },
+    priceInCents: {
+      type: Number,
+    }
   },
   {
     toJSON: {
